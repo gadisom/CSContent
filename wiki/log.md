@@ -5,6 +5,14 @@
 
 ---
 
+## [2026-04-24] ingest | 그래프 탐색(BFSDFS) — 업데이트
+
+raw/알고리즘 깊이 우선 탐색(DFS) 과 너비 우선 탐색(BFS).md 클리핑 처리.
+기존 파일에 시간복잡도(O(N+E) vs O(N²)), 문제 유형별 선택 기준 보강.
+
+변경된 파일:
+- published/algorithms/그래프 탐색(BFSDFS).md (업데이트)
+
 ## [2026-04-24] meta | 앱 데이터 모델 반영 — JSON 파이프라인 스키마 확정
 
 실제 앱 JSON 구조 확인 후 CLAUDE.md, meta/app-features.md 업데이트.

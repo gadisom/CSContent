@@ -8,103 +8,96 @@
 
 ## display_order 현황 (1000 단위 증분)
 
-| category | 현재 마지막 | 다음 신규 |
-|----------|-----------|---------|
-| data-structure | 6001 (ds-graph-basics) | 7001 |
-| algorithms | 8001 (algo-dp-basics) | 9001 |
-| operating-system | 11001 (os-context-switching) | 12001 |
-| database | 11001 (db-rdbms-vs-nosql) | 12001 |
-| network | 10001 (net-rest-restful) | 11001 |
+slug = 파일명(한글), display_order = 카테고리 내 알파벳 정렬 순서 × 1001
+
+| category | 현재 파일 수 | 마지막 order | 다음 신규 |
+|----------|------------|------------|---------|
+| data-structure | 6 | 6001 (힙과 우선순위큐) | 7001 |
+| algorithms | 8 | 8001 (탐색 일반) | 9001 |
+| operating-system | 11 | 11001 (프로세스와 스레드) | 12001 |
+| database | 11 | 11001 (트랜잭션과 데드락) | 12001 |
+| network | 10 | 10001 (쿠키와 세션) | 11001 |
 
 ---
 
-## 기존 콘텐츠 (DB 동기화 기준: 2026-04-24) — 총 46개
+## 기존 콘텐츠 (published/ 파일 기준 SSOT: 2026-04-24) — 총 46개
+
+> slug = 파일명 그대로 (한글). display_order는 알파벳 정렬 기준 자동 부여.
 
 ### data-structure (6개)
-| slug | title | display_order |
-|------|-------|--------------|
-| ds-array-vs-linked-list | 배열과 연결리스트의 차이 | 1001 |
-| ds-stack-vs-queue | 스택과 큐의 차이 | 2001 |
-| ds-hash-table-and-collision | 해시테이블과 충돌 해결 | 3001 |
-| ds-tree-vs-bst | 트리와 이진 탐색 트리(BST) | 4001 |
-| ds-heap-and-priority-queue | 힙과 우선순위큐 | 5001 |
-| ds-graph-basics | 그래프의 기본 개념과 표현 방식 | 6001 |
+| 파일명 (= slug) | display_order |
+|----------------|--------------|
+| 그래프 | 1001 |
+| 배열과 연결리스트 | 2001 |
+| 스택과 큐 | 3001 |
+| 트리와 BST | 4001 |
+| 해시테이블 | 5001 |
+| 힙과 우선순위큐 | 6001 |
 
 ### algorithms (8개)
-| slug | title | display_order |
-|------|-------|--------------|
-| alg-time-complexity | 시간복잡도와 공간복잡도 | 1001 |
-| algo-sorting-overview | 정렬 알고리즘 비교 | 2001 |
-| algo-search-strategy | 탐색 문제를 푸는 관점 | 3001 |
-| algo-graph-bfs-dfs | BFS와 DFS의 차이 | 4001 |
-| algo-binary-search | 이진 탐색의 전제와 활용 | 5001 |
-| algo-recursion-backtracking | 재귀와 백트래킹 | 6001 |
-| algo-greedy-basics | 그리디 알고리즘의 조건 | 7001 |
-| algo-dp-basics | 동적 계획법의 핵심 아이디어 | 8001 |
+| 파일명 (= slug) | display_order |
+|----------------|--------------|
+| 그래프 탐색(BFSDFS) | 1001 |
+| 그리디 | 2001 |
+| 동적 계획법 | 3001 |
+| 시간복잡도와 공간복잡도 | 4001 |
+| 이진 탐색 | 5001 |
+| 재귀와 백트래킹 | 6001 |
+| 정렬 | 7001 |
+| 탐색 일반 | 8001 |
 
 ### operating-system (11개)
-| slug | title | display_order |
-|------|-------|--------------|
-| os-process-vs-thread | 프로세스와 스레드의 차이 | 1001 |
-| os-multi-process-vs-multi-thread | 멀티프로세스와 멀티스레드 비교 | 2001 |
-| os-ipc-overview | IPC와 동기화가 필요한 이유 | 3001 |
-| os-mutex-semaphore-monitor | 뮤텍스, 세마포어, 모니터 비교 | 4001 |
-| os-deadlock-os | 운영체제에서의 데드락 | 5001 |
-| os-cpu-scheduling | CPU 스케줄링의 기본 개념 | 6001 |
-| os-memory-management | 운영체제의 메모리 관리 | 7001 |
-| os-paging-vs-segmentation | 페이징과 세그멘테이션 비교 | 8001 |
-| os-virtual-memory | 가상 메모리와 페이지 교체 | 9001 |
-| os-cache-locality | 캐시 메모리와 지역성 | 10001 |
-| os-context-switching | 컨텍스트 스위칭과 오버헤드 | 11001 |
+| 파일명 (= slug) | display_order |
+|----------------|--------------|
+| CPU 스케줄링 | 1001 |
+| IPC와 동기화 | 2001 |
+| 가상메모리와 페이지교체 | 3001 |
+| 멀티프로세스와 멀티스레드 | 4001 |
+| 메모리 관리 | 5001 |
+| 뮤텍스와 세마포어와 모니터 | 6001 |
+| 운영체제에서의 데드락 | 7001 |
+| 캐시 메모리와 지역성 | 8001 |
+| 컨텍스트 스위칭 | 9001 |
+| 페이징과 세그멘테이션 | 10001 |
+| 프로세스와 스레드 | 11001 |
 
-### database (12개)
-| slug | title | display_order |
-|------|-------|--------------|
-| db-database-basics | 데이터베이스를 사용하는 이유 | 1001 |
-| db-key-and-relationship | 기본키, 외래키와 관계 설계 | 2001 |
-| db-normalization | 정규화의 목적과 단계 | 3001 |
-| db-index-basics | 인덱스의 역할과 설계 기준 | 4001 |
-| db-index-btree-vs-hash | DB 인덱스가 해시보다 B+트리를 많이 쓰는 이유 | 4002 |
-| db-join-basics | 조인의 개념과 종류 | 5001 |
-| db-transaction-basics | 트랜잭션과 ACID | 6001 |
-| db-isolation-and-lock | 격리 수준과 락 | 7001 |
-| db-transaction-deadlock | 트랜잭션과 데드락 | 8001 |
-| db-statement-vs-prepared | Statement와 Prepared Statement의 차이 | 9001 |
-| db-sql-injection | SQL Injection의 원리와 대응 | 10001 |
-| db-rdbms-vs-nosql | RDBMS와 NoSQL 비교 | 11001 |
+### database (11개)
+| 파일명 (= slug) | display_order |
+|----------------|--------------|
+| RDBMS와 NoSQL | 1001 |
+| SQL Injection | 2001 |
+| Statement와 Prepared Statement | 3001 |
+| 격리수준과 락 | 4001 |
+| 데이터베이스 기본 | 5001 |
+| 인덱스 | 6001 |
+| 정규화 | 7001 |
+| 조인 | 8001 |
+| 키와 관계 설계 | 9001 |
+| 트랜잭션 | 10001 |
+| 트랜잭션과 데드락 | 11001 |
 
 ### network (10개)
-| slug | title | display_order |
-|------|-------|--------------|
-| net-osi-vs-tcpip | OSI 7계층과 TCP/IP 모델 | 1001 |
-| net-tcp-vs-udp | TCP와 UDP 비교 | 2001 |
-| net-three-way-four-way | 3-way handshake와 4-way handshake | 3001 |
-| net-http-vs-https | HTTP와 HTTPS의 차이 | 4001 |
-| net-get-vs-post | GET과 POST의 차이 | 5001 |
-| net-cookie-vs-session | 쿠키와 세션의 차이 | 6001 |
-| net-dns-resolution | DNS 조회 과정 | 7001 |
-| net-cors-basics | CORS의 목적과 동작 | 8001 |
-| net-web-request-flow | 브라우저에 URL을 입력했을 때의 흐름 | 9001 |
-| net-rest-restful | REST와 RESTful API의 개념 | 10001 |
+| 파일명 (= slug) | display_order |
+|----------------|--------------|
+| 3-way handshake와 4-way handshake | 1001 |
+| CORS | 2001 |
+| DNS | 3001 |
+| HTTP 메서드(GETPOST 중심) | 4001 |
+| HTTP와 HTTPS | 5001 |
+| OSI 7계층과 TCPIP | 6001 |
+| REST와 RESTful | 7001 |
+| TCP와 UDP | 8001 |
+| 웹 요청 흐름 | 9001 |
+| 쿠키와 세션 | 10001 |
 
 ---
 
-## Wiki 문서 현황
+## Ingest 워크플로우
 
-### Concepts (개념 문서)
-| 파일 | 상태 |
-|------|------|
-| [[concepts/ds-array-vs-linked-list]] | 작성됨 |
-
-### Content (앱 전달용 JSON)
-| 파일 | slug | status |
-|------|------|--------|
-| [[content/ds-array-vs-linked-list]] | ds-array-vs-linked-list | published |
-
----
-
-## Meta
-| 파일 | 요약 |
-|------|------|
-| [[meta/app-features]] | 앱 데이터 모델 및 기능 현황 |
-| [[meta/content-guidelines]] | 콘텐츠 제작 가이드라인 |
+raw/ 에 자료를 넣고 Claude에게 처리 요청 시:
+1. 이 index.md 읽어 기존 slug 중복 확인
+2. 카테고리 결정 (기존 5개 대분류 or 신규 폴더 생성)
+3. `published/<category>/<한국어제목>.md` 생성 또는 수정
+4. 이 index.md 업데이트 (새 행 추가, display_order 갱신)
+5. `wiki/log.md` 에 기록
+6. 사용자가 git push → GitHub Actions → Supabase 자동 동기화
