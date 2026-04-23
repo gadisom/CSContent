@@ -1,22 +1,20 @@
 """
 published/<category>/<한국어제목>.md → Supabase upsert
 
-MD 템플릿 약속:
-  ---
-  slug: ds-array-vs-linked-list
-  related: [slug1, slug2]
-  ---
+파일명 = slug = title. frontmatter 없음.
 
-  > 한 줄 요약 (summary)
+MD 템플릿 약속:
+  > 한 줄 요약
 
   ## 정의        → definition block
   ## 핵심 포인트 → keyPoints block
   ## 면접 질문   → interviewPrompts block
   ## 확인 문제   → checkQuestions block
-  ## 키워드      → keywords 배열
+  ## 키워드      → keywords 배열 (쉼표 구분)
+  ## 연관 콘텐츠 → [[파일명]] wikilink → slug (= 파일명)
 
-display_order: 카테고리 내 파일 정렬 순서로 자동 계산 (1001, 2001, 3001...)
-id: DB에 이미 있으면 기존 UUID 유지, 없으면 신규 생성
+display_order: 카테고리 내 파일명 정렬 순서 (1001, 2001, 3001...)
+id: DB에 slug가 있으면 기존 UUID 유지, 없으면 신규 생성
 """
 
 import glob
@@ -50,7 +48,7 @@ SECTION_TO_BLOCK = {
 
 
 def fetch_existing() -> dict:
-    """slug → id 매핑 반환"""
+    """slug → id 매핑"""
     url = f"{SUPABASE_URL}/rest/v1/{TABLE}?select=slug,id"
     req = urllib.request.Request(
         url, headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"}
@@ -59,43 +57,17 @@ def fetch_existing() -> dict:
         return {row["slug"]: row["id"] for row in json.loads(resp.read())}
 
 
-def build_title_to_slug(files: list[str]) -> dict:
-    """파일명(title) → slug 매핑 (wikilink 변환용)"""
-    mapping = {}
-    for filepath in files:
-        title = filepath.replace("\\", "/").split("/")[2].replace(".md", "")
-        try:
-            with open(filepath, encoding="utf-8") as f:
-                raw = f.read()
-            fm_match = re.match(r"^---\n(.*?)\n---\n", raw, re.DOTALL)
-            if fm_match:
-                slug_m = re.search(r"^slug:\s*(.+)$", fm_match.group(1), re.MULTILINE)
-                if slug_m:
-                    mapping[title] = slug_m.group(1).strip()
-        except Exception:
-            pass
-    return mapping
-
-
-def parse_md(filepath: str, title_to_slug: dict) -> dict:
+def parse_md(filepath: str) -> dict:
     with open(filepath, encoding="utf-8") as f:
         raw = f.read()
 
-    fm_match = re.match(r"^---\n(.*?)\n---\n", raw, re.DOTALL)
-    if not fm_match:
-        raise ValueError("frontmatter 없음")
-
-    fm_text = fm_match.group(1)
-    body = raw[fm_match.end():]
-
-    slug = re.search(r"^slug:\s*(.+)$", fm_text, re.MULTILINE).group(1).strip()
+    # frontmatter 있으면 제거 (하위 호환)
+    body = re.sub(r"^---\n.*?\n---\n", "", raw, flags=re.DOTALL).strip()
 
     summary_m = re.search(r"^>\s*(.+)$", body, re.MULTILINE)
     summary = summary_m.group(1).strip() if summary_m else ""
 
-    blocks = []
-    keywords = []
-    related = []
+    blocks, keywords, related = [], [], []
     sections = re.split(r"^## (.+)$", body, flags=re.MULTILINE)
 
     for i in range(1, len(sections), 2):
@@ -106,20 +78,17 @@ def parse_md(filepath: str, title_to_slug: dict) -> dict:
             for line in content.splitlines()
             if line.strip().startswith("-")
         ]
+
         if header == "키워드":
             all_text = " ".join(line.strip() for line in content.splitlines() if line.strip())
             keywords = [k.strip() for k in all_text.split(",") if k.strip()]
         elif header == "연관 콘텐츠":
-            # [[파일명]] → slug 변환
-            for title in re.findall(r"\[\[(.+?)\]\]", content):
-                if title in title_to_slug:
-                    related.append(title_to_slug[title])
-                else:
-                    print(f"  ⚠ 연관 콘텐츠 '{title}' 를 찾을 수 없음 (slug 매핑 없음)")
+            # [[파일명]] → 파일명이 곧 slug
+            related = re.findall(r"\[\[(.+?)\]\]", content)
         elif header in SECTION_TO_BLOCK:
             blocks.append({"type": SECTION_TO_BLOCK[header], "items": items})
 
-    return {"slug": slug, "related": related, "summary": summary, "blocks": blocks, "keywords": keywords}
+    return {"summary": summary, "blocks": blocks, "keywords": keywords, "related": related}
 
 
 def upsert(data: dict):
@@ -145,7 +114,6 @@ def main():
         print("No .md files found in published/")
         return
 
-    # 카테고리별 파일 정렬 → display_order 자동 계산
     by_category: dict[str, list[str]] = defaultdict(list)
     for f in all_files:
         category = f.replace("\\", "/").split("/")[1]
@@ -154,27 +122,25 @@ def main():
         by_category[cat].sort()
 
     existing = fetch_existing()
-    title_to_slug = build_title_to_slug(all_files)
     print(f"DB 기존 콘텐츠: {len(existing)}개\n")
 
     errors, inserts, updates = [], [], []
 
     for category_slug, files in sorted(by_category.items()):
         for idx, filepath in enumerate(files):
-            display_order = (idx + 1) * 1000 + 1  # 1001, 2001, 3001...
-            subcategory_title = filepath.replace("\\", "/").split("/")[2].replace(".md", "")
+            display_order = (idx + 1) * 1000 + 1
+            slug = filepath.replace("\\", "/").split("/")[2].replace(".md", "")
 
             try:
-                parsed = parse_md(filepath, title_to_slug)
-                slug = parsed["slug"]
+                parsed = parse_md(filepath)
 
                 record = {
                     "id": existing.get(slug) or str(uuid.uuid4()),
                     "category_slug": category_slug,
                     "category_title": CATEGORY_TITLES.get(category_slug, category_slug),
-                    "subcategory_title": subcategory_title,
+                    "subcategory_title": slug,
                     "slug": slug,
-                    "title": subcategory_title,
+                    "title": slug,
                     "summary": parsed["summary"],
                     "blocks": parsed["blocks"],
                     "keywords": parsed["keywords"],
@@ -188,10 +154,10 @@ def main():
 
                 if is_new:
                     inserts.append(slug)
-                    print(f"✚  INSERT [{display_order}] {category_slug}/{subcategory_title}")
+                    print(f"✚  INSERT [{display_order}] {category_slug}/{slug}")
                 else:
                     updates.append(slug)
-                    print(f"↻  UPDATE [{display_order}] {category_slug}/{subcategory_title}")
+                    print(f"↻  UPDATE [{display_order}] {category_slug}/{slug}")
 
             except urllib.error.HTTPError as e:
                 print(f"✗  {filepath} — HTTP {e.code}: {e.read().decode()}")
