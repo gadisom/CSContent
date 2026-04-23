@@ -46,6 +46,8 @@ SECTION_TO_BLOCK = {
     "확인 문제": "checkQuestions",
 }
 
+GITHUB_RAW = "https://raw.githubusercontent.com/gadisom/CSContent/main/raw/assets"
+
 
 def fetch_existing() -> dict:
     """slug → id 매핑"""
@@ -82,6 +84,18 @@ def parse_md(filepath: str) -> dict:
         if header == "키워드":
             all_text = " ".join(line.strip() for line in content.splitlines() if line.strip())
             keywords = [k.strip() for k in all_text.split(",") if k.strip()]
+        elif header == "이미지":
+            for line in content.splitlines():
+                line = line.lstrip("- ").strip()
+                if not line:
+                    continue
+                # ![[파일명]] → GitHub raw URL
+                local_m = re.match(r"!\[\[(.+?)\]\]", line)
+                if local_m:
+                    filename = local_m.group(1)
+                    blocks.append({"type": "image", "items": [f"{GITHUB_RAW}/{filename}"]})
+                elif line.startswith("http"):
+                    blocks.append({"type": "image", "items": [line]})
         elif header == "연관 콘텐츠":
             # [[파일명]] → 파일명이 곧 slug
             related = re.findall(r"\[\[(.+?)\]\]", content)
