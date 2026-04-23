@@ -36,6 +36,20 @@ def is_placeholder(data: dict) -> bool:
     return "UUID" in id_val or "생성" in id_val or not id_val
 
 
+def fetch_existing_slugs() -> set:
+    url = f"{SUPABASE_URL}/rest/v1/{TABLE}?select=slug"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "apikey": SUPABASE_KEY,
+            "Authorization": f"Bearer {SUPABASE_KEY}",
+        },
+    )
+    with urllib.request.urlopen(req) as resp:
+        rows = json.loads(resp.read())
+        return {row["slug"] for row in rows}
+
+
 def upsert(data: dict) -> int:
     if is_placeholder(data):
         data["id"] = str(uuid.uuid4())
@@ -63,7 +77,13 @@ def main():
         print("No content files found.")
         return
 
+    existing_slugs = fetch_existing_slugs()
+    print(f"DB에 기존 콘텐츠 {len(existing_slugs)}개 확인\n")
+
     errors = []
+    inserts = []
+    updates = []
+
     for filepath in files:
         try:
             data = extract_json(filepath)
@@ -71,8 +91,17 @@ def main():
                 print(f"⚠  Skip (no JSON block): {filepath}")
                 continue
 
-            status = upsert(data)
-            print(f"✓  {data['slug']} → HTTP {status}")
+            slug = data["slug"]
+            is_new = slug not in existing_slugs
+
+            upsert(data)
+
+            if is_new:
+                inserts.append(slug)
+                print(f"✚  INSERT: {slug}")
+            else:
+                updates.append(slug)
+                print(f"↻  UPDATE: {slug}")
 
         except urllib.error.HTTPError as e:
             body = e.read().decode()
@@ -82,11 +111,10 @@ def main():
             print(f"✗  {filepath} — {e}")
             errors.append(filepath)
 
-    if errors:
-        print(f"\n{len(errors)} file(s) failed.")
-        sys.exit(1)
+    print(f"\n신규 insert: {len(inserts)}개, 업데이트: {len(updates)}개, 실패: {len(errors)}개")
 
-    print(f"\n{len(files) - len(errors)} file(s) synced.")
+    if errors:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

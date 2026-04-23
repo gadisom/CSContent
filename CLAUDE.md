@@ -88,14 +88,11 @@ category (대분류)
 - category 약어: ds / alg / os / db / net
 
 ### display_order 규칙
-- 자료구조: 1001부터 시작
-- 알고리즘: 2001부터 시작
-- 운영체제: 3001부터 시작
-- 데이터베이스: 4001부터 시작
-- 네트워크: 5001부터 시작
-- 소분류 내에서 1씩 증가
-
-*새 콘텐츠 추가 시 `wiki/index.md` 의 display_order 현황을 확인하고 다음 번호를 부여한다.*
+- 카테고리 내에서 **1000 단위 증분**: 1001, 2001, 3001, ...
+- 신규 콘텐츠는 해당 카테고리의 마지막 번호 + 1000
+- 예외적으로 같은 소분류 내 연속 항목은 +1 허용 (예: 4001, 4002)
+- **반드시 `wiki/index.md` 의 display_order 현황을 먼저 확인한다**
+- slug 중복도 index.md에서 확인 후 생성
 
 ---
 
@@ -233,4 +230,4 @@ action: `ingest`, `query`, `lint`, `meta`
 - 파일명: 영어 소문자 + 하이픈
 - 날짜: 절대 날짜 `YYYY-MM-DD`
 - JSON의 `id` 는 매번 새 UUID v4를 생성한다: `python3 -c "import uuid; print(uuid.uuid4())"` 로 생성.
-- `is_published: false` 로 시작. Obsidian에서 `true` 로 바꾸고 push하면 DB에 반영됨.
+- `is_published: true` 가 기본값. push하면 바로 앱에 노출됨.
