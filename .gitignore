@@ -1,1 +1,7 @@
 .DS_Store
+
+# Obsidian 개인 환경 설정 (공유 불필요)
+.obsidian/appearance.json
+.obsidian/core-plugins.json
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json

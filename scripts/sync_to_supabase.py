@@ -92,9 +92,12 @@ def parse_md(filepath: str) -> dict:
             for line in content.splitlines():
                 line = line.strip()
                 local_m = re.match(r"!\[\[(.+?)\]\]", line)
+                md_img_m = re.search(r"!\[.*?\]\((https?://[^\)]+)\)", line)
                 if local_m:
                     filename = local_m.group(1)
                     blocks.append({"type": "image", "items": [f"{GITHUB_RAW}/{filename}"]})
+                elif md_img_m:
+                    blocks.append({"type": "image", "items": [md_img_m.group(1)]})
                 elif re.match(r"https?://\S+\.(png|jpg|jpeg|gif|webp|svg)", line, re.IGNORECASE):
                     blocks.append({"type": "image", "items": [line]})
 

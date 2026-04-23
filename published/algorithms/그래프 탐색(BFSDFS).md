@@ -4,7 +4,7 @@
 - BFS는 큐를 사용해 현재 레벨과 가까운 노드부터 방문한다. 최단 간선 수를 구해야 하는 문제에서 자주 쓰인다.
 - DFS는 스택이나 재귀를 사용해 한 경로를 끝까지 탐색한 뒤 되돌아온다. 경로 존재 여부, 사이클 검사, 조합 탐색 같은 문제와 잘 맞는다.
 - 면접에서는 구현 자료구조뿐 아니라, 왜 BFS가 최단 거리 문제에 적합하고 DFS가 백트래킹과 잘 연결되는지를 말해주면 좋다.
-
+![](https://blog.kakaocdn.net/dna/c305k7/btqB5E2hI4r/AAAAAAAAAAAAAAAAAAAAANGtFzXAm0-DVYQPeuyQvBdVkf-k3XxdgXn5FZzZbcAd/img.gif?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1777561199&allow_ip=&allow_referer=&signature=fSj5uAq9CO8hjHEwDvIYPLLsrAQ%3D)
 ## 핵심 포인트
 - BFS는 레벨 단위 탐색, DFS는 깊이 우선 탐색이다.
 - BFS는 큐, DFS는 스택 또는 재귀와 연결된다.
