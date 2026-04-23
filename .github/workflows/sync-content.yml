@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'wiki/content/**'
+      - 'published/**'
 
 jobs:
   sync:

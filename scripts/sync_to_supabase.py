@@ -1,17 +1,21 @@
 """
-wiki/content/*.md 파일에서 JSON 블록을 추출해 Supabase에 upsert한다.
-slug를 기준으로 충돌 해결 (이미 있으면 업데이트, 없으면 insert).
+published/<category>/<subcategory>/<slug>.json 구조를 읽어 Supabase에 upsert한다.
+- category_slug: 상위 폴더명
+- subcategory_slug: 하위 폴더명
+- slug: 파일명 (.json 제외)
+
+폴더 구조가 DB 매핑의 소스 오브 트루스.
+새 소주제 폴더를 만들고 JSON 추가 후 push하면 자동으로 DB에 반영된다.
 
 필요한 GitHub Secrets:
   SUPABASE_URL         — https://<project-ref>.supabase.co
-  SUPABASE_SERVICE_KEY — service_role 키 (anon 키 아님)
+  SUPABASE_SERVICE_KEY — service_role 키
   SUPABASE_TABLE       — 테이블 이름 (예: content_items)
 """
 
 import glob
 import json
 import os
-import re
 import sys
 import urllib.error
 import urllib.request
@@ -20,20 +24,6 @@ import uuid
 SUPABASE_URL = os.environ["SUPABASE_URL"].rstrip("/")
 SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
 TABLE = os.environ["SUPABASE_TABLE"]
-
-
-def extract_json(filepath: str) -> dict | None:
-    with open(filepath, encoding="utf-8") as f:
-        content = f.read()
-    match = re.search(r"```json\s*\n(.*?)\n```", content, re.DOTALL)
-    if not match:
-        return None
-    return json.loads(match.group(1))
-
-
-def is_placeholder(data: dict) -> bool:
-    id_val = str(data.get("id", ""))
-    return "UUID" in id_val or "생성" in id_val or not id_val
 
 
 def fetch_existing_slugs() -> set:
@@ -46,19 +36,17 @@ def fetch_existing_slugs() -> set:
         },
     )
     with urllib.request.urlopen(req) as resp:
-        rows = json.loads(resp.read())
-        return {row["slug"] for row in rows}
+        return {row["slug"] for row in json.loads(resp.read())}
 
 
-def upsert(data: dict) -> int:
-    if is_placeholder(data):
+def upsert(data: dict):
+    if not data.get("id") or "UUID" in str(data["id"]):
         data["id"] = str(uuid.uuid4())
 
     url = f"{SUPABASE_URL}/rest/v1/{TABLE}?on_conflict=slug"
-    payload = json.dumps(data).encode("utf-8")
     req = urllib.request.Request(
         url,
-        data=payload,
+        data=json.dumps(data).encode("utf-8"),
         headers={
             "apikey": SUPABASE_KEY,
             "Authorization": f"Bearer {SUPABASE_KEY}",
@@ -72,47 +60,51 @@ def upsert(data: dict) -> int:
 
 
 def main():
-    files = sorted(glob.glob("wiki/content/*.md"))
+    # published/<category>/<subcategory>/<slug>.json
+    files = glob.glob("published/*/*/*.json")
     if not files:
-        print("No content files found.")
+        print("No JSON files found in published/")
         return
 
     existing_slugs = fetch_existing_slugs()
-    print(f"DB에 기존 콘텐츠 {len(existing_slugs)}개 확인\n")
+    print(f"DB 기존 콘텐츠: {len(existing_slugs)}개\n")
 
-    errors = []
-    inserts = []
-    updates = []
+    errors, inserts, updates = [], [], []
 
-    for filepath in files:
+    for filepath in sorted(files):
+        parts = filepath.replace("\\", "/").split("/")
+        # parts: ['published', '<category>', '<subcategory>', '<slug>.json']
+        category_slug = parts[1]
+        subcategory_slug = parts[2]
+        slug = parts[3].replace(".json", "")
+
         try:
-            data = extract_json(filepath)
-            if data is None:
-                print(f"⚠  Skip (no JSON block): {filepath}")
-                continue
+            with open(filepath, encoding="utf-8") as f:
+                data = json.load(f)
 
-            slug = data["slug"]
+            # 폴더 구조가 소스 오브 트루스 — JSON 내 값을 덮어씀
+            data["category_slug"] = category_slug
+            data["subcategory_slug"] = subcategory_slug
+            data["slug"] = slug
+
             is_new = slug not in existing_slugs
-
             upsert(data)
 
             if is_new:
                 inserts.append(slug)
-                print(f"✚  INSERT: {slug}")
+                print(f"✚  INSERT: {category_slug}/{subcategory_slug}/{slug}")
             else:
                 updates.append(slug)
-                print(f"↻  UPDATE: {slug}")
+                print(f"↻  UPDATE: {category_slug}/{subcategory_slug}/{slug}")
 
         except urllib.error.HTTPError as e:
-            body = e.read().decode()
-            print(f"✗  {filepath} — HTTP {e.code}: {body}")
+            print(f"✗  {filepath} — HTTP {e.code}: {e.read().decode()}")
             errors.append(filepath)
         except Exception as e:
             print(f"✗  {filepath} — {e}")
             errors.append(filepath)
 
-    print(f"\n신규 insert: {len(inserts)}개, 업데이트: {len(updates)}개, 실패: {len(errors)}개")
-
+    print(f"\n신규: {len(inserts)}개  업데이트: {len(updates)}개  실패: {len(errors)}개")
     if errors:
         sys.exit(1)
 

@@ -101,17 +101,34 @@ category (대분류)
 ```
 CSContent/
 ├── CLAUDE.md                  # 이 파일 — 스키마 & 운영 가이드
+├── published/                 # ★ 앱에 전달되는 콘텐츠 (폴더 구조 = DB 매핑)
+│   ├── data-structure/
+│   │   ├── array-linked-list/
+│   │   │   └── ds-array-vs-linked-list.json
+│   │   └── stack-queue/
+│   ├── algorithms/
+│   │   └── graph-search/
+│   │       └── algo-graph-bfs-dfs.json
+│   ├── operating-system/
+│   ├── database/
+│   └── network/
 ├── wiki/
 │   ├── index.md               # 전체 위키 카탈로그 + display_order 현황
 │   ├── log.md                 # 활동 로그 (append-only)
 │   ├── overview.md            # CS 커버리지 현황 및 로드맵
-│   ├── concepts/              # 개념 지식 문서 (읽기용)
+│   ├── concepts/              # 개념 지식 문서 (읽기용, 앱 전달 X)
 │   ├── topics/                # 주제 영역 페이지
-│   ├── content/               # 앱에 전달할 콘텐츠 (JSON 포함)
 │   └── meta/                  # 앱 기능, 운영 가이드
 └── raw/                       # 원본 자료 (변경 금지)
     └── assets/
 ```
+
+### published/ 폴더 규칙
+- `published/<category_slug>/<subcategory_slug>/<slug>.json`
+- **폴더명이 DB의 category_slug / subcategory_slug 가 됨**
+- 새 소주제 폴더 생성 = 새 subcategory 추가
+- JSON 안의 category_slug / subcategory_slug / slug 는 sync 시 폴더명·파일명으로 자동 덮어씌워짐
+- 단, category_title / subcategory_title (한국어) 는 JSON 안에 직접 작성
 
 ---
 
@@ -184,15 +201,17 @@ created: <YYYY-MM-DD>
 트리거: 사용자가 raw 자료를 주고 처리를 요청할 때
 
 1. 자료 읽기 (raw 파일 또는 사용자가 직접 붙여넣기)
-2. 사용자와 category / subcategory / slug 확정
-3. `wiki/concepts/<slug>.md` 생성 — 지식 문서
-4. `wiki/content/<slug>.md` 생성 — JSON 포함
-5. 해당 `wiki/topics/<category>.md` 업데이트 (개념 목록, content 목록)
-6. `wiki/index.md` 업데이트 (display_order 현황 포함)
+2. `wiki/index.md` 에서 slug 중복 확인 및 display_order 확인
+3. category / subcategory / slug 확정
+4. `published/<category>/<subcategory>/<slug>.json` 생성 — 앱 전달용 순수 JSON
+5. `wiki/concepts/<slug>.md` 생성 — 지식 문서 (읽기용)
+6. `wiki/index.md` 업데이트 (새 항목 추가, display_order 현황 갱신)
 7. `wiki/log.md` 항목 추가
 
-**slug, subcategory, display_order, related_item_ids 는 반드시 확정 후 JSON 생성.**
-`is_published` 는 기본 `false`. 사용자가 확인 후 `true` 로 변경.
+**주의:**
+- slug 중복 여부를 index.md에서 반드시 확인
+- display_order: 해당 category 마지막 번호 + 1000
+- is_published 기본값: true
 
 ### Query (현황 파악 / 추천)
 트리거: "뭐가 빠져있어?", "다음에 뭘 만들면 좋을까?"
