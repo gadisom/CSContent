@@ -84,23 +84,19 @@ def parse_md(filepath: str) -> dict:
         if header == "키워드":
             all_text = " ".join(line.strip() for line in content.splitlines() if line.strip())
             keywords = [k.strip() for k in all_text.split(",") if k.strip()]
-        elif header == "이미지":
+        elif header == "연관 콘텐츠":
+            related = re.findall(r"\[\[(.+?)\]\]", content)
+        elif header in SECTION_TO_BLOCK:
+            blocks.append({"type": SECTION_TO_BLOCK[header], "items": items})
+            # 섹션 내 인라인 이미지 감지 → 섹션 블록 바로 뒤에 삽입
             for line in content.splitlines():
-                line = line.lstrip("- ").strip()
-                if not line:
-                    continue
-                # ![[파일명]] → GitHub raw URL
+                line = line.strip()
                 local_m = re.match(r"!\[\[(.+?)\]\]", line)
                 if local_m:
                     filename = local_m.group(1)
                     blocks.append({"type": "image", "items": [f"{GITHUB_RAW}/{filename}"]})
-                elif line.startswith("http"):
+                elif re.match(r"https?://\S+\.(png|jpg|jpeg|gif|webp|svg)", line, re.IGNORECASE):
                     blocks.append({"type": "image", "items": [line]})
-        elif header == "연관 콘텐츠":
-            # [[파일명]] → 파일명이 곧 slug
-            related = re.findall(r"\[\[(.+?)\]\]", content)
-        elif header in SECTION_TO_BLOCK:
-            blocks.append({"type": SECTION_TO_BLOCK[header], "items": items})
 
     return {"summary": summary, "blocks": blocks, "keywords": keywords, "related": related}
 
