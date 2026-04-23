@@ -59,7 +59,25 @@ def fetch_existing() -> dict:
         return {row["slug"]: row["id"] for row in json.loads(resp.read())}
 
 
-def parse_md(filepath: str) -> dict:
+def build_title_to_slug(files: list[str]) -> dict:
+    """파일명(title) → slug 매핑 (wikilink 변환용)"""
+    mapping = {}
+    for filepath in files:
+        title = filepath.replace("\\", "/").split("/")[2].replace(".md", "")
+        try:
+            with open(filepath, encoding="utf-8") as f:
+                raw = f.read()
+            fm_match = re.match(r"^---\n(.*?)\n---\n", raw, re.DOTALL)
+            if fm_match:
+                slug_m = re.search(r"^slug:\s*(.+)$", fm_match.group(1), re.MULTILINE)
+                if slug_m:
+                    mapping[title] = slug_m.group(1).strip()
+        except Exception:
+            pass
+    return mapping
+
+
+def parse_md(filepath: str, title_to_slug: dict) -> dict:
     with open(filepath, encoding="utf-8") as f:
         raw = f.read()
 
@@ -71,14 +89,13 @@ def parse_md(filepath: str) -> dict:
     body = raw[fm_match.end():]
 
     slug = re.search(r"^slug:\s*(.+)$", fm_text, re.MULTILINE).group(1).strip()
-    related_m = re.search(r"^related:\s*\[(.+)\]$", fm_text, re.MULTILINE)
-    related = [s.strip() for s in related_m.group(1).split(",")] if related_m else []
 
     summary_m = re.search(r"^>\s*(.+)$", body, re.MULTILINE)
     summary = summary_m.group(1).strip() if summary_m else ""
 
     blocks = []
     keywords = []
+    related = []
     sections = re.split(r"^## (.+)$", body, flags=re.MULTILINE)
 
     for i in range(1, len(sections), 2):
@@ -92,6 +109,13 @@ def parse_md(filepath: str) -> dict:
         if header == "키워드":
             all_text = " ".join(line.strip() for line in content.splitlines() if line.strip())
             keywords = [k.strip() for k in all_text.split(",") if k.strip()]
+        elif header == "연관 콘텐츠":
+            # [[파일명]] → slug 변환
+            for title in re.findall(r"\[\[(.+?)\]\]", content):
+                if title in title_to_slug:
+                    related.append(title_to_slug[title])
+                else:
+                    print(f"  ⚠ 연관 콘텐츠 '{title}' 를 찾을 수 없음 (slug 매핑 없음)")
         elif header in SECTION_TO_BLOCK:
             blocks.append({"type": SECTION_TO_BLOCK[header], "items": items})
 
@@ -130,6 +154,7 @@ def main():
         by_category[cat].sort()
 
     existing = fetch_existing()
+    title_to_slug = build_title_to_slug(all_files)
     print(f"DB 기존 콘텐츠: {len(existing)}개\n")
 
     errors, inserts, updates = [], [], []
@@ -140,7 +165,7 @@ def main():
             subcategory_title = filepath.replace("\\", "/").split("/")[2].replace(".md", "")
 
             try:
-                parsed = parse_md(filepath)
+                parsed = parse_md(filepath, title_to_slug)
                 slug = parsed["slug"]
 
                 record = {

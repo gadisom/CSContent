@@ -1,6 +1,18 @@
 ---
-slug: <% await tp.system.prompt("slug", "예: ds-array-vs-linked-list") %>
-related: [<% await tp.system.prompt("related slugs (없으면 빈칸)") %>]
+slug: <%*
+const folder = tp.file.folder(true);
+const category = folder.split("/").pop();
+const prefixes = {
+  "data-structure": "ds",
+  "algorithms": "alg",
+  "operating-system": "os",
+  "database": "db",
+  "network": "net"
+};
+const prefix = prefixes[category] ? prefixes[category] + "-" : "";
+const slug = await tp.system.prompt("slug", prefix);
+tR += slug;
+%>
 ---
 
 > <% tp.file.cursor(1) %>
@@ -19,3 +31,6 @@ related: [<% await tp.system.prompt("related slugs (없으면 빈칸)") %>]
 
 ## 키워드
 <% tp.file.cursor(6) %>
+
+## 연관 콘텐츠
+- <% tp.file.cursor(7) %>
