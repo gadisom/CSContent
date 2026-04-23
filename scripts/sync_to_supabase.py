@@ -152,6 +152,7 @@ def main():
                     "id": existing.get(slug) or str(uuid.uuid4()),
                     "category_slug": category_slug,
                     "category_title": CATEGORY_TITLES.get(category_slug, category_slug),
+                    "subcategory_slug": slug,
                     "subcategory_title": slug,
                     "slug": slug,
                     "title": slug,
