@@ -1,10 +1,9 @@
 """
-published/<category>/<제목>.md → Supabase upsert
+published/<category>/<한국어제목>.md → Supabase upsert
 
 MD 템플릿 약속:
   ---
   slug: ds-array-vs-linked-list
-  order: 1001
   related: [slug1, slug2]
   ---
 
@@ -14,13 +13,10 @@ MD 템플릿 약속:
   ## 핵심 포인트 → keyPoints block
   ## 면접 질문   → interviewPrompts block
   ## 확인 문제   → checkQuestions block
-  ## 키워드      → keywords (쉼표 구분)
+  ## 키워드      → keywords 배열
 
-규칙:
-  - id: DB에 이미 있으면 기존 UUID 유지, 없으면 신규 생성
-  - category_slug: 폴더명
-  - subcategory_title / title: 파일명 (.md 제외)
-  - is_published: 항상 true
+display_order: 카테고리 내 파일 정렬 순서로 자동 계산 (1001, 2001, 3001...)
+id: DB에 이미 있으면 기존 UUID 유지, 없으면 신규 생성
 """
 
 import glob
@@ -31,6 +27,7 @@ import sys
 import urllib.error
 import urllib.request
 import uuid
+from collections import defaultdict
 
 SUPABASE_URL = os.environ["SUPABASE_URL"].rstrip("/")
 SUPABASE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
@@ -66,7 +63,6 @@ def parse_md(filepath: str) -> dict:
     with open(filepath, encoding="utf-8") as f:
         raw = f.read()
 
-    # 1. frontmatter
     fm_match = re.match(r"^---\n(.*?)\n---\n", raw, re.DOTALL)
     if not fm_match:
         raise ValueError("frontmatter 없음")
@@ -75,16 +71,12 @@ def parse_md(filepath: str) -> dict:
     body = raw[fm_match.end():]
 
     slug = re.search(r"^slug:\s*(.+)$", fm_text, re.MULTILINE).group(1).strip()
-    order_m = re.search(r"^order:\s*(\d+)$", fm_text, re.MULTILINE)
-    order = int(order_m.group(1)) if order_m else None
     related_m = re.search(r"^related:\s*\[(.+)\]$", fm_text, re.MULTILINE)
     related = [s.strip() for s in related_m.group(1).split(",")] if related_m else []
 
-    # 2. summary (첫 번째 blockquote)
     summary_m = re.search(r"^>\s*(.+)$", body, re.MULTILINE)
     summary = summary_m.group(1).strip() if summary_m else ""
 
-    # 3. sections → blocks
     blocks = []
     keywords = []
     sections = re.split(r"^## (.+)$", body, flags=re.MULTILINE)
@@ -97,24 +89,13 @@ def parse_md(filepath: str) -> dict:
             for line in content.splitlines()
             if line.strip().startswith("-")
         ]
-
         if header == "키워드":
-            # 줄바꿈 없이 이어진 텍스트, 쉼표 구분
-            all_text = " ".join(
-                line.strip() for line in content.splitlines() if line.strip()
-            )
+            all_text = " ".join(line.strip() for line in content.splitlines() if line.strip())
             keywords = [k.strip() for k in all_text.split(",") if k.strip()]
         elif header in SECTION_TO_BLOCK:
             blocks.append({"type": SECTION_TO_BLOCK[header], "items": items})
 
-    return {
-        "slug": slug,
-        "order": order,
-        "related": related,
-        "summary": summary,
-        "blocks": blocks,
-        "keywords": keywords,
-    }
+    return {"slug": slug, "related": related, "summary": summary, "blocks": blocks, "keywords": keywords}
 
 
 def upsert(data: dict):
@@ -135,57 +116,64 @@ def upsert(data: dict):
 
 
 def main():
-    files = glob.glob("published/*/*.md")
-    if not files:
+    all_files = glob.glob("published/*/*.md")
+    if not all_files:
         print("No .md files found in published/")
         return
+
+    # 카테고리별 파일 정렬 → display_order 자동 계산
+    by_category: dict[str, list[str]] = defaultdict(list)
+    for f in all_files:
+        category = f.replace("\\", "/").split("/")[1]
+        by_category[category].append(f)
+    for cat in by_category:
+        by_category[cat].sort()
 
     existing = fetch_existing()
     print(f"DB 기존 콘텐츠: {len(existing)}개\n")
 
     errors, inserts, updates = [], [], []
 
-    for filepath in sorted(files):
-        parts = filepath.replace("\\", "/").split("/")
-        category_slug = parts[1]
-        filename = parts[2]
-        subcategory_title = filename.replace(".md", "")
+    for category_slug, files in sorted(by_category.items()):
+        for idx, filepath in enumerate(files):
+            display_order = (idx + 1) * 1000 + 1  # 1001, 2001, 3001...
+            subcategory_title = filepath.replace("\\", "/").split("/")[2].replace(".md", "")
 
-        try:
-            parsed = parse_md(filepath)
-            slug = parsed["slug"]
+            try:
+                parsed = parse_md(filepath)
+                slug = parsed["slug"]
 
-            record = {
-                "id": existing.get(slug) or str(uuid.uuid4()),
-                "category_slug": category_slug,
-                "category_title": CATEGORY_TITLES.get(category_slug, category_slug),
-                "subcategory_title": subcategory_title,
-                "slug": slug,
-                "title": subcategory_title,
-                "summary": parsed["summary"],
-                "blocks": parsed["blocks"],
-                "keywords": parsed["keywords"],
-                "related_item_ids": parsed["related"],
-                "display_order": parsed["order"],
-                "is_published": True,
-            }
+                record = {
+                    "id": existing.get(slug) or str(uuid.uuid4()),
+                    "category_slug": category_slug,
+                    "category_title": CATEGORY_TITLES.get(category_slug, category_slug),
+                    "subcategory_title": subcategory_title,
+                    "slug": slug,
+                    "title": subcategory_title,
+                    "summary": parsed["summary"],
+                    "blocks": parsed["blocks"],
+                    "keywords": parsed["keywords"],
+                    "related_item_ids": parsed["related"],
+                    "display_order": display_order,
+                    "is_published": True,
+                }
 
-            is_new = slug not in existing
-            upsert(record)
+                is_new = slug not in existing
+                upsert(record)
 
-            if is_new:
-                inserts.append(slug)
-                print(f"✚  INSERT: {category_slug}/{subcategory_title} ({slug})")
-            else:
-                updates.append(slug)
-                print(f"↻  UPDATE: {category_slug}/{subcategory_title} ({slug})")
+                if is_new:
+                    inserts.append(slug)
+                    print(f"✚  INSERT [{display_order}] {category_slug}/{subcategory_title}")
+                else:
+                    updates.append(slug)
+                    print(f"↻  UPDATE [{display_order}] {category_slug}/{subcategory_title}")
 
-        except urllib.error.HTTPError as e:
-            print(f"✗  {filepath} — HTTP {e.code}: {e.read().decode()}")
-            errors.append(filepath)
-        except Exception as e:
-            print(f"✗  {filepath} — {e}")
-            errors.append(filepath)
+            except urllib.error.HTTPError as e:
+                print(f"✗  {filepath} — HTTP {e.code}: {e.read().decode()}")
+                errors.append(filepath)
+            except Exception as e:
+                print(f"✗  {filepath} — {e}")
+                errors.append(filepath)
 
     print(f"\n신규: {len(inserts)}개  업데이트: {len(updates)}개  실패: {len(errors)}개")
     if errors:
