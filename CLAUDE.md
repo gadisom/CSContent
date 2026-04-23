@@ -124,11 +124,49 @@ CSContent/
 ```
 
 ### published/ 폴더 규칙
-- `published/<category_slug>/<subcategory_slug>/<slug>.json`
-- **폴더명이 DB의 category_slug / subcategory_slug 가 됨**
-- 새 소주제 폴더 생성 = 새 subcategory 추가
-- JSON 안의 category_slug / subcategory_slug / slug 는 sync 시 폴더명·파일명으로 자동 덮어씌워짐
-- 단, category_title / subcategory_title (한국어) 는 JSON 안에 직접 작성
+- `published/<category_slug>/<한국어 제목>.md`
+- **폴더명** → `category_slug` (자동 매핑)
+- **파일명** (`.md` 제외) → `title` = `subcategory_title` (자동)
+- **`id`** → 스크립트가 자동 생성 (기존 slug면 기존 UUID 유지, 신규면 uuid4())
+- **`is_published`** → 항상 `true` (published/ 안에 있으면 발행된 것)
+
+### MD 템플릿 (반드시 이 형식 준수)
+
+```markdown
+---
+slug: <영어-슬러그>
+order: <숫자>
+related: [slug1, slug2]
+---
+
+> 한 줄 요약
+
+## 정의
+- 항목1
+- 항목2
+
+## 핵심 포인트
+- 항목1
+
+## 면접 질문
+- 질문1
+
+## 확인 문제
+- 질문1
+
+## 키워드
+키워드1, 키워드2, 키워드3
+```
+
+### 섹션 → block type 매핑
+| MD 섹션 | block type |
+|---------|-----------|
+| `## 정의` | `definition` |
+| `## 핵심 포인트` | `keyPoints` |
+| `## 면접 질문` | `interviewPrompts` |
+| `## 확인 문제` | `checkQuestions` |
+| `## 키워드` | keywords 배열 (block 아님) |
+| `> 텍스트` | summary (block 아님) |
 
 ---
 
