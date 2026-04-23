@@ -1,0 +1,43 @@
+# CSContent Wiki — 활동 로그
+
+> append-only. 가장 최근 항목이 위에 온다.
+> 파싱: `grep "^## \[" wiki/log.md | head -10`
+
+---
+
+## [2026-04-24] meta | 앱 데이터 모델 반영 — JSON 파이프라인 스키마 확정
+
+실제 앱 JSON 구조 확인 후 CLAUDE.md, meta/app-features.md 업데이트.
+Raw → concepts/ + content/(JSON 포함) 파이프라인 확정.
+
+생성/변경된 파일:
+- CLAUDE.md (업데이트) — JSON 스키마, block 타입, slug 규칙, display_order 규칙 추가
+- wiki/index.md (업데이트) — display_order 현황 테이블 추가
+- wiki/meta/app-features.md (업데이트) — 데이터 모델 상세 추가
+
+## [2026-04-24] ingest | 배열과 연결리스트의 차이 (예시)
+
+파이프라인 동작 확인용 예시 콘텐츠 생성.
+
+생성된 파일:
+- wiki/concepts/ds-array-vs-linked-list.md
+- wiki/content/ds-array-vs-linked-list.md (JSON 포함, status: draft)
+
+## [2026-04-24] meta | 위키 시스템 초기화
+
+CSContent 앱을 위한 LLM Wiki 시스템을 구축했다.
+앱은 퀴즈 + 개념 설명 기능이 이미 구현된 상태이며, 이 위키는 콘텐츠 제작을 기록·연결하는 두뇌 역할을 한다.
+
+변경된 파일:
+- CLAUDE.md (신규) — 스키마 & 운영 가이드
+- wiki/index.md (신규) — 전체 카탈로그
+- wiki/log.md (신규) — 이 파일
+- wiki/overview.md (신규) — CS 커버리지 현황 & 로드맵
+- wiki/topics/data-structures.md (신규)
+- wiki/topics/algorithms.md (신규)
+- wiki/topics/operating-systems.md (신규)
+- wiki/topics/networks.md (신규)
+- wiki/topics/databases.md (신규)
+- wiki/topics/system-design.md (신규)
+- wiki/meta/app-features.md (신규)
+- wiki/meta/content-guidelines.md (신규)

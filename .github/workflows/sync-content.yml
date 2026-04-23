@@ -1,0 +1,20 @@
+name: Sync content to Supabase
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'wiki/content/**'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync content to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_TABLE: ${{ secrets.SUPABASE_TABLE }}
+        run: python3 scripts/sync_to_supabase.py
