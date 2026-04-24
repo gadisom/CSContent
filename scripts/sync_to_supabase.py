@@ -61,8 +61,8 @@ def fetch_existing() -> dict:
 
 
 def parse_category_meta(category_slug: str) -> dict:
-    """published/<category>/_category.md 에서 메타 읽기"""
-    path = f"published/{category_slug}/_category.md"
+    """categories/<slug>.md 에서 메타 읽기"""
+    path = f"categories/{category_slug}.md"
     if not os.path.exists(path):
         return {"name": CATEGORY_TITLES.get(category_slug, category_slug)}
     with open(path, encoding="utf-8") as f:
