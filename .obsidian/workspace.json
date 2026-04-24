@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "published/android/박우성.md",
+                "file": "categories/server.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "박우성"
+              "title": "server"
             }
           }
         ]
@@ -200,9 +200,12 @@
   },
   "active": "287c728c68199cad",
   "lastOpenFiles": [
+    "categories/operating-system.md",
+    "categories/server.md",
+    "categories/android.md",
+    "published/android/박우성.md",
     "raw/assets/Pasted image 20260424154545.png",
     "published/Server/심종한.md",
-    "published/android/박우성.md",
     "published/operating-system/CPU 스케줄링.md",
     "published/operating-system/메모리 관리.md",
     "published/Server",
@@ -210,7 +213,6 @@
     "raw/Android Compose UI.md",
     "quiz/android/Compose UI.md",
     "published/android/Compose UI.md",
-    "categories/android.md",
     "quiz/android",
     "published/android",
     "published/ios/Combine.md",
@@ -219,7 +221,6 @@
     "raw/Combine 연습해보기-(WWDC).md",
     "categories/ios.md",
     "categories/data-structure.md",
-    "categories/operating-system.md",
     "templates/카테고리.md",
     "categories/network.md",
     "categories/algorithms.md",
