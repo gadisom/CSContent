@@ -138,15 +138,6 @@ def parse_file(filepath: str) -> list[dict]:
     return rows
 
 
-def fetch_max_id() -> int:
-    url = f"{SUPABASE_URL}/rest/v1/quiz_questions?select=id&order=id.desc&limit=1"
-    req = urllib.request.Request(
-        url, headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"}
-    )
-    with urllib.request.urlopen(req) as resp:
-        rows = json.loads(resp.read())
-        return rows[0]["id"] if rows else 0
-
 
 def upsert_row(row: dict) -> int:
     if "id" in row:
@@ -175,39 +166,12 @@ def upsert_row(row: dict) -> int:
         return resp.status
 
 
-def write_id_to_file(filepath: str, question: str, assigned_id: int) -> None:
-    """새로 할당된 id를 MD 파일의 해당 질문 헤더에 기록한다."""
-    with open(filepath, encoding="utf-8") as f:
-        content = f.read()
-
-    # #### OX/빈칸/객관식 | [] 패턴을 찾아 id 삽입
-    # 질문 앞 20자로 해당 블록을 특정
-    q_prefix = re.escape(question[:20])
-    pattern = re.compile(
-        r"(#### (?:OX|빈칸|객관식) \| \[\])\n(" + q_prefix + r")",
-        re.MULTILINE,
-    )
-    replacement = rf"\1".replace("[]", f"[{assigned_id}]") + "\n" + r"\2"
-
-    new_content, count = pattern.subn(
-        lambda m: m.group(0).replace(
-            m.group(1), m.group(1).replace("[]", f"[{assigned_id}]"), 1
-        ),
-        content,
-        count=1,
-    )
-    if count:
-        with open(filepath, "w", encoding="utf-8") as f:
-            f.write(new_content)
-
-
 def main():
     files = glob.glob("quiz/*/*.md")
     if not files:
         print("No .md files found in quiz/")
         return
 
-    next_id = fetch_max_id() + 1
     errors, inserts, updates = [], [], []
 
     for filepath in sorted(files):
@@ -216,14 +180,12 @@ def main():
             for row in rows:
                 is_new = "id" not in row
                 if is_new:
-                    row["id"] = next_id
-                    next_id += 1
+                    print(f"⚠  SKIP (id 없음): {filepath} — {row['question'][:40]}")
+                    continue
 
                 upsert_row(row)
                 label = f"[{row['id']}] {row['question'][:35]}..."
-
                 if is_new:
-                    write_id_to_file(filepath, row["question"], row["id"])
                     inserts.append(label)
                     print(f"✚  INSERT {label}")
                 else:
