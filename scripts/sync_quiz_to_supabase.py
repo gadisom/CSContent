@@ -141,18 +141,24 @@ def parse_file(filepath: str) -> list[dict]:
 def upsert_row(row: dict) -> int:
     if "id" in row:
         url = f"{SUPABASE_URL}/rest/v1/quiz_questions?on_conflict=id"
-    else:
-        url = f"{SUPABASE_URL}/rest/v1/quiz_questions"
-
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(row).encode("utf-8"),
-        headers={
+        headers = {
             "apikey": SUPABASE_KEY,
             "Authorization": f"Bearer {SUPABASE_KEY}",
             "Content-Type": "application/json",
             "Prefer": "resolution=merge-duplicates",
-        },
+        }
+    else:
+        url = f"{SUPABASE_URL}/rest/v1/quiz_questions"
+        headers = {
+            "apikey": SUPABASE_KEY,
+            "Authorization": f"Bearer {SUPABASE_KEY}",
+            "Content-Type": "application/json",
+        }
+
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(row).encode("utf-8"),
+        headers=headers,
         method="POST",
     )
     with urllib.request.urlopen(req) as resp:
@@ -171,13 +177,15 @@ def main():
         try:
             rows = parse_file(filepath)
             for row in rows:
-                if "id" not in row:
-                    print(f"⚠  SKIP (id 없음 — 앱에서 생성 필요): {row['question'][:40]}...")
-                    continue
+                is_new = "id" not in row
                 upsert_row(row)
-                label = f"[{row['id']}] {row['question'][:35]}..."
-                updates.append(label)
-                print(f"↻  UPDATE {label}")
+                label = f"[{'new' if is_new else row['id']}] {row['question'][:35]}..."
+                if is_new:
+                    inserts.append(label)
+                    print(f"✚  INSERT {label}")
+                else:
+                    updates.append(label)
+                    print(f"↻  UPDATE {label}")
         except urllib.error.HTTPError as e:
             print(f"✗  {filepath} — HTTP {e.code}: {e.read().decode()}")
             errors.append(filepath)
@@ -185,7 +193,7 @@ def main():
             print(f"✗  {filepath} — {e}")
             errors.append(filepath)
 
-    print(f"\n업데이트: {len(updates)}개  실패: {len(errors)}개")
+    print(f"\n신규: {len(inserts)}개  업데이트: {len(updates)}개  실패: {len(errors)}개")
     if errors:
         sys.exit(1)
 
