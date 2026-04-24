@@ -116,8 +116,8 @@ def parse_file(filepath: str) -> list[dict]:
             "question": question,
             "choices": choices,
             "correct_index": correct_index,
-            "ox_answer": None,
-            "fill_answer": None,
+            "ox_answer": "",
+            "fill_answer": "",
             "explanation": blockquotes[1] if len(blockquotes) > 1 else "",
         }
         if rid is not None:
