@@ -16,6 +16,10 @@
     {
       "folder": "quiz",
       "template": "templates/퀴즈.md"
+    },
+    {
+      "folder": "categories",
+      "template": "templates/카테고리.md"
     }
   ],
   "enable_file_templates": false,
