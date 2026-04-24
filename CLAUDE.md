@@ -44,6 +44,7 @@ category (대분류)
 | operating-system | 운영체제 |
 | database | 데이터베이스 |
 | network | 네트워크 |
+| ios | iOS |
 
 ### Content Item JSON 스키마
 ```json
@@ -241,8 +242,8 @@ created: <YYYY-MM-DD>
 1. 자료 읽기 (raw 파일 또는 사용자가 직접 붙여넣기)
 2. `wiki/index.md` 에서 slug 중복 확인 및 display_order 확인
 3. category / subcategory / slug 확정
-4. `published/<category>/<subcategory>/<slug>.json` 생성 — 앱 전달용 순수 JSON
-5. `wiki/concepts/<slug>.md` 생성 — 지식 문서 (읽기용)
+4. `published/<category>/<한국어제목>.md` 생성 또는 수정
+5. `quiz/<category>/<개념>.md` 생성 (OX/빈칸/객관식 포함)
 6. `wiki/index.md` 업데이트 (새 항목 추가, display_order 현황 갱신)
 7. `wiki/log.md` 항목 추가
 
@@ -250,6 +251,19 @@ created: <YYYY-MM-DD>
 - slug 중복 여부를 index.md에서 반드시 확인
 - display_order: 해당 category 마지막 번호 + 1000
 - is_published 기본값: true
+- 빈칸 문제 정답은 반드시 단일 단어/용어만 (O(n) 같은 수식 금지)
+
+### 신규 대분류(category) 생성 시 체크리스트
+기존 5개 외 새 카테고리가 필요할 때 반드시 아래를 모두 처리한다.
+
+1. `published/<new-category>/` 폴더 생성
+2. `quiz/<new-category>/` 폴더 생성
+3. `scripts/sync_to_supabase.py` → `CATEGORY_TITLES` 딕셔너리에 추가
+4. `CLAUDE.md` → 대분류 목록 테이블에 추가
+5. `wiki/index.md` → display_order 현황 테이블에 추가
+6. `wiki/log.md` 에 기록
+
+> `quiz_categories` 테이블은 push 시 `sync_to_supabase.py`가 `published/` 폴더 목록을 읽어 자동 동기화한다. 수동 SQL 불필요.
 
 ### Query (현황 파악 / 추천)
 트리거: "뭐가 빠져있어?", "다음에 뭘 만들면 좋을까?"

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "quiz/ios/앱 생명주기.md",
+                "file": "quiz/algorithms/무제.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "앱 생명주기"
+              "title": "무제"
             }
           }
         ]
@@ -200,8 +200,9 @@
   },
   "active": "287c728c68199cad",
   "lastOpenFiles": [
-    "published/ios/앱 생명주기.md",
     "quiz/ios/앱 생명주기.md",
+    "quiz/algorithms/무제.md",
+    "published/ios/앱 생명주기.md",
     "quiz/ios",
     "raw/iOS - 앱의 생명주기 App's Life Cycle (AppDelegate, SceneDelegate).md",
     "published/ios",
@@ -229,7 +230,6 @@
     "quiz/network/TCP 핸드셰이크.md",
     "quiz/network/OSI 모델.md",
     "quiz/network/HTTPS.md",
-    "quiz/network/HTTP.md",
     "quiz/network",
     "quiz/database",
     "quiz/data-structure",

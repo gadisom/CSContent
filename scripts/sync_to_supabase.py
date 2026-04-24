@@ -60,6 +60,49 @@ def fetch_existing() -> dict:
         return {row["slug"]: row["id"] for row in json.loads(resp.read())}
 
 
+def sync_categories(category_slugs: list[str]):
+    """published/ 폴더 목록 기준으로 quiz_categories SSOT 동기화
+    - 폴더에 있고 DB에 없으면 INSERT
+    - DB에 있고 폴더에 없으면 DELETE
+    """
+    folder_slugs = set(category_slugs)
+
+    url = f"{SUPABASE_URL}/rest/v1/quiz_categories?select=slug"
+    req = urllib.request.Request(
+        url, headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"}
+    )
+    with urllib.request.urlopen(req) as resp:
+        existing_slugs = {row["slug"] for row in json.loads(resp.read())}
+
+    for slug in folder_slugs - existing_slugs:
+        title = CATEGORY_TITLES.get(slug, slug)
+        data = json.dumps({"slug": slug, "title": title}).encode("utf-8")
+        insert_req = urllib.request.Request(
+            f"{SUPABASE_URL}/rest/v1/quiz_categories",
+            data=data,
+            headers={
+                "apikey": SUPABASE_KEY,
+                "Authorization": f"Bearer {SUPABASE_KEY}",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(insert_req):
+            print(f"✚  quiz_categories INSERT: {slug} ({title})")
+
+    for slug in existing_slugs - folder_slugs:
+        delete_req = urllib.request.Request(
+            f"{SUPABASE_URL}/rest/v1/quiz_categories?slug=eq.{slug}",
+            headers={
+                "apikey": SUPABASE_KEY,
+                "Authorization": f"Bearer {SUPABASE_KEY}",
+            },
+            method="DELETE",
+        )
+        with urllib.request.urlopen(delete_req):
+            print(f"✗  quiz_categories DELETE: {slug}")
+
+
 def parse_md(filepath: str) -> dict:
     with open(filepath, encoding="utf-8") as f:
         raw = f.read()
@@ -134,6 +177,8 @@ def main():
         by_category[category].append(f)
     for cat in by_category:
         by_category[cat].sort()
+
+    sync_categories(list(by_category.keys()))
 
     existing = fetch_existing()
     print(f"DB 기존 콘텐츠: {len(existing)}개\n")
