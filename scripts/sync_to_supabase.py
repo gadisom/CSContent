@@ -60,39 +60,76 @@ def fetch_existing() -> dict:
         return {row["slug"]: row["id"] for row in json.loads(resp.read())}
 
 
+def parse_category_meta(category_slug: str) -> dict:
+    """published/<category>/_category.md 에서 메타 읽기"""
+    path = f"published/{category_slug}/_category.md"
+    if not os.path.exists(path):
+        return {"name": CATEGORY_TITLES.get(category_slug, category_slug)}
+    with open(path, encoding="utf-8") as f:
+        raw = f.read()
+    fm_m = re.match(r"^---\n(.*?)\n---", raw, re.DOTALL)
+    if not fm_m:
+        return {"name": CATEGORY_TITLES.get(category_slug, category_slug)}
+    meta = {}
+    for line in fm_m.group(1).splitlines():
+        if ":" in line:
+            k, _, v = line.partition(":")
+            meta[k.strip()] = v.strip().strip('"')
+    return meta
+
+
 def sync_categories(category_slugs: list[str]):
-    """published/ 폴더 목록 기준으로 quiz_categories SSOT 동기화
+    """published/_category.md 기준으로 quiz_categories SSOT 동기화
     - 폴더에 있고 DB에 없으면 INSERT
+    - 폴더에 있고 DB에 있으면 UPDATE (icon 등 메타 반영)
     - DB에 있고 폴더에 없으면 DELETE
     """
     folder_slugs = set(category_slugs)
+    folder_names = {parse_category_meta(s).get("name", s): s for s in folder_slugs}
 
-    url = f"{SUPABASE_URL}/rest/v1/quiz_categories?select=slug"
+    url = f"{SUPABASE_URL}/rest/v1/quiz_categories?select=id,name"
     req = urllib.request.Request(
         url, headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"}
     )
     with urllib.request.urlopen(req) as resp:
-        existing_slugs = {row["slug"] for row in json.loads(resp.read())}
+        existing = {row["name"]: row["id"] for row in json.loads(resp.read())}
 
-    for slug in folder_slugs - existing_slugs:
-        title = CATEGORY_TITLES.get(slug, slug)
-        data = json.dumps({"slug": slug, "title": title}).encode("utf-8")
-        insert_req = urllib.request.Request(
-            f"{SUPABASE_URL}/rest/v1/quiz_categories",
-            data=data,
-            headers={
-                "apikey": SUPABASE_KEY,
-                "Authorization": f"Bearer {SUPABASE_KEY}",
-                "Content-Type": "application/json",
-            },
-            method="POST",
-        )
-        with urllib.request.urlopen(insert_req):
-            print(f"✚  quiz_categories INSERT: {slug} ({title})")
+    for name, slug in folder_names.items():
+        meta = parse_category_meta(slug)
+        payload = {k: v for k, v in meta.items() if k in ("name", "icon", "icon_color", "icon_bg_color")}
 
-    for slug in existing_slugs - folder_slugs:
+        if name in existing:
+            row_id = existing[name]
+            patch_req = urllib.request.Request(
+                f"{SUPABASE_URL}/rest/v1/quiz_categories?id=eq.{row_id}",
+                data=json.dumps(payload).encode("utf-8"),
+                headers={
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": f"Bearer {SUPABASE_KEY}",
+                    "Content-Type": "application/json",
+                },
+                method="PATCH",
+            )
+            with urllib.request.urlopen(patch_req):
+                print(f"↻  quiz_categories UPDATE: {name}")
+        else:
+            insert_req = urllib.request.Request(
+                f"{SUPABASE_URL}/rest/v1/quiz_categories",
+                data=json.dumps(payload).encode("utf-8"),
+                headers={
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": f"Bearer {SUPABASE_KEY}",
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(insert_req):
+                print(f"✚  quiz_categories INSERT: {name}")
+
+    for name in set(existing.keys()) - set(folder_names.keys()):
+        row_id = existing[name]
         delete_req = urllib.request.Request(
-            f"{SUPABASE_URL}/rest/v1/quiz_categories?slug=eq.{slug}",
+            f"{SUPABASE_URL}/rest/v1/quiz_categories?id=eq.{row_id}",
             headers={
                 "apikey": SUPABASE_KEY,
                 "Authorization": f"Bearer {SUPABASE_KEY}",
@@ -100,7 +137,7 @@ def sync_categories(category_slugs: list[str]):
             method="DELETE",
         )
         with urllib.request.urlopen(delete_req):
-            print(f"✗  quiz_categories DELETE: {slug}")
+            print(f"✗  quiz_categories DELETE: {name}")
 
 
 def parse_md(filepath: str) -> dict:
@@ -178,7 +215,10 @@ def main():
     for cat in by_category:
         by_category[cat].sort()
 
-    sync_categories(list(by_category.keys()))
+    try:
+        sync_categories(list(by_category.keys()))
+    except Exception as e:
+        print(f"⚠️  quiz_categories 동기화 실패 (스킵): {e}")
 
     existing = fetch_existing()
     print(f"DB 기존 콘텐츠: {len(existing)}개\n")
