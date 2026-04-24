@@ -5,6 +5,15 @@
 
 ---
 
+## [2026-04-24] ingest | 앱 생명주기 — 신규 (ios 대분류 생성)
+
+raw/iOS - 앱의 생명주기 클리핑 처리. ios 대분류 신규 생성.
+
+생성/변경된 파일:
+- published/ios/앱 생명주기.md (신규)
+- scripts/sync_to_supabase.py (ios 카테고리 추가)
+- wiki/index.md (ios 카테고리 추가)
+
 ## [2026-04-24] ingest | 그래프 탐색(BFSDFS) — 업데이트
 
 raw/알고리즘 깊이 우선 탐색(DFS) 과 너비 우선 탐색(BFS).md 클리핑 처리.

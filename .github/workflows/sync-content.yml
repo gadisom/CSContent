@@ -6,7 +6,9 @@ on:
     branches: [main]
     paths:
       - 'published/**'
+      - 'quiz/**'
       - 'scripts/sync_to_supabase.py'
+      - 'scripts/sync_quiz_to_supabase.py'
 
 jobs:
   sync:
@@ -20,3 +22,9 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           SUPABASE_TABLE: ${{ secrets.SUPABASE_TABLE }}
         run: python3 scripts/sync_to_supabase.py
+
+      - name: Sync quiz to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python3 scripts/sync_quiz_to_supabase.py

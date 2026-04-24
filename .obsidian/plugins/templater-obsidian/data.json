@@ -12,6 +12,10 @@
     {
       "folder": "published",
       "template": "templates/CS 콘텐츠.md"
+    },
+    {
+      "folder": "quiz",
+      "template": "templates/퀴즈.md"
     }
   ],
   "enable_file_templates": false,

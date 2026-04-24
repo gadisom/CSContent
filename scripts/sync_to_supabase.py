@@ -37,6 +37,7 @@ CATEGORY_TITLES = {
     "operating-system": "운영체제",
     "database": "데이터베이스",
     "network": "네트워크",
+    "ios": "iOS",
 }
 
 SECTION_TO_BLOCK = {
@@ -151,10 +152,8 @@ def main():
                     "id": existing.get(slug) or str(uuid.uuid4()),
                     "category_slug": category_slug,
                     "category_title": CATEGORY_TITLES.get(category_slug, category_slug),
-                    "subcategory_slug": slug,
                     "subcategory_title": slug,
                     "slug": slug,
-                    "title": slug,
                     "summary": parsed["summary"],
                     "blocks": parsed["blocks"],
                     "keywords": parsed["keywords"],
