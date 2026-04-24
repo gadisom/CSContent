@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-04-24] ingest | iOS - Combine (신규)
+raw/Combine 연습해보기-(WWDC).md 처리. DFS/BFS·앱 생명주기는 기존 파일 존재로 스킵.
+생성/변경된 파일: published/ios/Combine.md, quiz/ios/Combine.md, wiki/index.md
+
+---
+
 ## [2026-04-24] ingest | 앱 생명주기 — 신규 (ios 대분류 생성)
 
 raw/iOS - 앱의 생명주기 클리핑 처리. ios 대분류 신규 생성.
