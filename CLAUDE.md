@@ -45,6 +45,7 @@ category (대분류)
 | database | 데이터베이스 |
 | network | 네트워크 |
 | ios | iOS |
+| android | Android |
 
 ### Content Item JSON 스키마
 ```json

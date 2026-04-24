@@ -38,6 +38,7 @@ CATEGORY_TITLES = {
     "database": "데이터베이스",
     "network": "네트워크",
     "ios": "iOS",
+    "android": "Android",
 }
 
 SECTION_TO_BLOCK = {

@@ -46,6 +46,7 @@ CATEGORY_ID_MAP = {
     "operating-system": "operating-systems",
     "database": "databases",
     "network": "networking",
+    "android": "android",
 }
 
 HEADER_RE = re.compile(r"^#### (OX|빈칸|객관식) \| \[(\d*)\]$")
