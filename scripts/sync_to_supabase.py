@@ -96,7 +96,7 @@ def sync_categories(category_slugs: list[str]):
 
     for name, slug in folder_names.items():
         meta = parse_category_meta(slug)
-        payload = {k: v for k, v in meta.items() if k in ("name", "icon", "icon_color", "icon_bg_color")}
+        payload = {k: v for k, v in meta.items() if k in ("id", "name", "icon", "icon_color", "icon_bg_color")}
 
         if name in existing:
             row_id = existing[name]

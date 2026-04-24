@@ -1,4 +1,5 @@
 ---
+id: operating-systems
 name: 운영체제
 icon: terminal
 icon_color: "#9442E8"
