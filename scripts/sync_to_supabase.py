@@ -39,6 +39,7 @@ CATEGORY_TITLES = {
     "network": "네트워크",
     "ios": "iOS",
     "android": "Android",
+    "server": "Server",
 }
 
 SECTION_TO_BLOCK = {

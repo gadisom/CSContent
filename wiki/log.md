@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-04-24] ingest | Server — 서버 개념.md 8개 파일로 분리
+폴더명 Server→server 소문자 통일. 심종한.md 삭제. 메시지큐/Spring MVC/Spring AOP/쿠키·세션·JWT/Polling·SSE·WebSocket/JDBC·ORM/CICD 배포 전략/Docker 생성. quiz 48문항(id 619-666).
+생성/변경된 파일: published/server/* (8개), quiz/server/* (8개), categories/server.md, CLAUDE.md, wiki/index.md
+
+---
+
 ## [2026-04-24] ingest | Android - Compose UI (신규, android 대분류 생성)
 raw/Android Compose UI.md 처리. android 대분류 신규 생성.
 생성/변경된 파일: published/android/Compose UI.md, quiz/android/Compose UI.md, categories/android.md, CLAUDE.md, wiki/index.md
