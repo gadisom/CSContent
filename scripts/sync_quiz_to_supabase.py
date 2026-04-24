@@ -171,15 +171,13 @@ def main():
         try:
             rows = parse_file(filepath)
             for row in rows:
-                is_update = "id" in row
+                if "id" not in row:
+                    print(f"⚠  SKIP (id 없음 — 앱에서 생성 필요): {row['question'][:40]}...")
+                    continue
                 upsert_row(row)
-                label = f"[{row.get('id', 'new')}] {row['question'][:35]}..."
-                if is_update:
-                    updates.append(label)
-                    print(f"↻  UPDATE {label}")
-                else:
-                    inserts.append(label)
-                    print(f"✚  INSERT {label}")
+                label = f"[{row['id']}] {row['question'][:35]}..."
+                updates.append(label)
+                print(f"↻  UPDATE {label}")
         except urllib.error.HTTPError as e:
             print(f"✗  {filepath} — HTTP {e.code}: {e.read().decode()}")
             errors.append(filepath)
@@ -187,7 +185,7 @@ def main():
             print(f"✗  {filepath} — {e}")
             errors.append(filepath)
 
-    print(f"\n신규: {len(inserts)}개  업데이트: {len(updates)}개  실패: {len(errors)}개")
+    print(f"\n업데이트: {len(updates)}개  실패: {len(errors)}개")
     if errors:
         sys.exit(1)
 
