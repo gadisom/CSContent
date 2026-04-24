@@ -130,7 +130,7 @@ def parse_file(filepath: str) -> list[dict]:
             row["type"] = "fill"
             row["fill_answer"] = blockquotes[0] if blockquotes else ""
         else:
-            row["type"] = "multiple_choice"
+            row["type"] = "mcq"
             row["explanation"] = blockquotes[0] if blockquotes else ""
 
         rows.append(row)
