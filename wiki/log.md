@@ -5,6 +5,16 @@
 
 ---
 
+## [2026-04-25] meta | oop 신규 대분류 생성 — ios에서 이동
+OOP는 Swift 전용 개념이 아니라 별도 카테고리가 적합하다는 판단으로 ios → oop 이동.
+변경된 파일: published/oop/*, quiz/oop/*, scripts/sync_to_supabase.py, CLAUDE.md, wiki/index.md
+
+## [2026-04-25] ingest | OOP — 객체지향 프로그래밍(OOP)·추상화·다형성 (Swift 중심)
+Swift로 보는 OOP 3개 콘텐츠 신규 생성. 퀴즈 18문항(id 667-684).
+생성된 파일: published/oop/객체지향 프로그래밍(OOP).md, published/oop/추상화.md, published/oop/다형성.md, quiz/oop/객체지향 프로그래밍(OOP).md, quiz/oop/추상화.md, quiz/oop/다형성.md, wiki/index.md
+
+---
+
 ## [2026-04-24] ingest | Server — 서버 개념.md 8개 파일로 분리
 폴더명 Server→server 소문자 통일. 심종한.md 삭제. 메시지큐/Spring MVC/Spring AOP/쿠키·세션·JWT/Polling·SSE·WebSocket/JDBC·ORM/CICD 배포 전략/Docker 생성. quiz 48문항(id 619-666).
 생성/변경된 파일: published/server/* (8개), quiz/server/* (8개), categories/server.md, CLAUDE.md, wiki/index.md

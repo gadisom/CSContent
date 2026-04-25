@@ -40,6 +40,7 @@ CATEGORY_TITLES = {
     "ios": "iOS",
     "android": "Android",
     "server": "Server",
+    "oop": "객체지향",
 }
 
 SECTION_TO_BLOCK = {

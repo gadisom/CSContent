@@ -47,6 +47,7 @@ category (대분류)
 | ios | iOS |
 | android | Android |
 | server | Server |
+| oop | 객체지향 |
 
 ### Content Item JSON 스키마
 ```json
