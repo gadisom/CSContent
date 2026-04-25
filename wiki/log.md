@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-04-25] ingest | Android — Map과 HashMap (Kotlin)
+HashMap 내부 원리(배열+연결리스트→트리, 해시 충돌, 버킷, 리사이징) 신규 생성. 퀴즈 6문항(id 685-690).
+생성된 파일: published/android/Map과 HashMap.md, quiz/android/Map과 HashMap.md, wiki/index.md
+
+---
+
 ## [2026-04-25] meta | oop 신규 대분류 생성 — ios에서 이동
 OOP는 Swift 전용 개념이 아니라 별도 카테고리가 적합하다는 판단으로 ios → oop 이동.
 변경된 파일: published/oop/*, quiz/oop/*, scripts/sync_to_supabase.py, CLAUDE.md, wiki/index.md
