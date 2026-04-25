@@ -172,21 +172,5 @@ push하면 GitHub Actions가 자동 실행된다.
 |---------|------|
 | `sync_to_supabase.py` | `published/` → `content_items` 테이블 upsert |
 | `sync_quiz_to_supabase.py` | `quiz/` → `quiz_questions` 테이블 upsert |
-
-- 기존 데이터 **덮어쓰기 아님** — slug/id 기준 upsert (있으면 UPDATE, 없으면 INSERT)
-- 카테고리는 `categories/` 폴더가 SSOT — 폴더에 없으면 DB에서도 삭제됨
-
 ---
 
-## 현재 카테고리
-
-| slug | 이름 |
-|------|------|
-| data-structure | 자료구조 |
-| algorithms | 알고리즘 |
-| operating-system | 운영체제 |
-| database | 데이터베이스 |
-| network | 네트워크 |
-| ios | iOS |
-| android | Android |
-| server | Server |
