@@ -5,6 +5,18 @@
 
 ---
 
+## [2026-04-29] meta | 퀴즈 삭제 동기화 로직 추가
+quiz/를 SSOT로 보고 로컬 파일에 없는 quiz_questions id를 Supabase에서도 삭제하도록 sync_quiz_to_supabase.py를 보강.
+생성/변경된 파일: scripts/sync_quiz_to_supabase.py, README.md, wiki/log.md
+
+---
+
+## [2026-04-29] lint | 퀴즈 빈칸 한국어 단답 기준 정리
+quiz/ 전체 216문항 구조 점검. 빈칸 64문항의 정답을 모두 한국어 단답으로 정리하고, 정답 노출·영어 API명·숫자·약어 맞히기 문항을 개념어 중심으로 수정.
+생성/변경된 파일: quiz/algorithms/*, quiz/android/*, quiz/data-structure/*, quiz/database/*, quiz/ios/*, quiz/network/*, quiz/oop/추상화.md, quiz/operating-system/*, quiz/server/*, wiki/meta/content-guidelines.md, wiki/log.md
+
+---
+
 ## [2026-04-25] ingest | Android — Map과 HashMap (Kotlin)
 HashMap 내부 원리(배열+연결리스트→트리, 해시 충돌, 버킷, 리사이징) 신규 생성. 퀴즈 6문항(id 685-690).
 생성된 파일: published/android/Map과 HashMap.md, quiz/android/Map과 HashMap.md, wiki/index.md

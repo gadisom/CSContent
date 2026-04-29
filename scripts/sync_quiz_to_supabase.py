@@ -1,5 +1,5 @@
 """
-quiz/<category>/<concept>.md → quiz_questions upsert
+quiz/<category>/<concept>.md → quiz_questions upsert + stale row delete
 
 MD 형식:
 ---
@@ -26,7 +26,8 @@ tag: <tag>
 
 규칙:
 - [id] 있으면 upsert (on_conflict=id)
-- [] 이면 신규 insert
+- [] 이면 스킵
+- quiz/가 SSOT이므로, 로컬 파일에 없는 기존 DB id는 삭제
 """
 
 import glob
@@ -169,22 +170,68 @@ def upsert_row(row: dict) -> int:
         return resp.status
 
 
+def fetch_existing_ids(category_ids: set[str]) -> set[int]:
+    """현재 repo가 관리하는 카테고리의 DB 퀴즈 id를 조회한다."""
+    existing: set[int] = set()
+    for category_id in sorted(category_ids):
+        url = (
+            f"{SUPABASE_URL}/rest/v1/quiz_questions"
+            f"?select=id&category_id=eq.{category_id}"
+        )
+        req = urllib.request.Request(
+            url,
+            headers={
+                "apikey": SUPABASE_KEY,
+                "Authorization": f"Bearer {SUPABASE_KEY}",
+            },
+        )
+        with urllib.request.urlopen(req) as resp:
+            existing.update(row["id"] for row in json.loads(resp.read()))
+    return existing
+
+
+def delete_row(row_id: int) -> int:
+    url = f"{SUPABASE_URL}/rest/v1/quiz_questions?id=eq.{row_id}"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "apikey": SUPABASE_KEY,
+            "Authorization": f"Bearer {SUPABASE_KEY}",
+        },
+        method="DELETE",
+    )
+    with urllib.request.urlopen(req) as resp:
+        return resp.status
+
+
 def main():
     files = glob.glob("quiz/*/*.md")
     if not files:
         print("No .md files found in quiz/")
         return
 
-    errors, inserts, updates = [], [], []
+    errors, inserts, updates, skipped_missing_ids, deletes = [], [], [], [], []
+    local_ids: set[int] = set()
+    local_category_ids: set[str] = set()
+    id_sources: dict[int, str] = {}
 
     for filepath in sorted(files):
         try:
             rows = parse_file(filepath)
             for row in rows:
+                local_category_ids.add(row["category_id"])
                 is_new = "id" not in row
                 if is_new:
                     print(f"⚠  SKIP (id 없음): {filepath} — {row['question'][:40]}")
+                    skipped_missing_ids.append(filepath)
                     continue
+
+                if row["id"] in id_sources:
+                    raise ValueError(
+                        f"중복 quiz id {row['id']}: {id_sources[row['id']]} / {filepath}"
+                    )
+                id_sources[row["id"]] = filepath
+                local_ids.add(row["id"])
 
                 upsert_row(row)
                 label = f"[{row['id']}] {row['question'][:35]}..."
@@ -201,7 +248,27 @@ def main():
             print(f"✗  {filepath} — {e}")
             errors.append(filepath)
 
-    print(f"\n신규: {len(inserts)}개  업데이트: {len(updates)}개  실패: {len(errors)}개")
+    if not errors and not skipped_missing_ids:
+        try:
+            existing_ids = fetch_existing_ids(local_category_ids)
+            stale_ids = sorted(existing_ids - local_ids)
+            for row_id in stale_ids:
+                delete_row(row_id)
+                deletes.append(row_id)
+                print(f"✗  DELETE stale quiz id: {row_id}")
+        except urllib.error.HTTPError as e:
+            print(f"✗  stale delete — HTTP {e.code}: {e.read().decode()}")
+            errors.append("stale delete")
+        except Exception as e:
+            print(f"✗  stale delete — {e}")
+            errors.append("stale delete")
+    elif skipped_missing_ids:
+        print("⚠  id 없는 문항이 있어 stale delete를 건너뜀")
+
+    print(
+        f"\n신규: {len(inserts)}개  업데이트: {len(updates)}개  "
+        f"삭제: {len(deletes)}개  실패: {len(errors)}개"
+    )
     if errors:
         sys.exit(1)
 

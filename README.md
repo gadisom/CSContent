@@ -183,6 +183,5 @@ push하면 GitHub Actions가 자동 실행된다.
 | 스크립트 | 역할 |
 |---------|------|
 | `sync_to_supabase.py` | `published/` → `content_items` 테이블 upsert |
-| `sync_quiz_to_supabase.py` | `quiz/` → `quiz_questions` 테이블 upsert |
+| `sync_quiz_to_supabase.py` | `quiz/` → `quiz_questions` 테이블 upsert + 로컬에 없는 문항 삭제 |
 ---
-

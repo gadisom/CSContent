@@ -14,13 +14,13 @@ afterCompletion은 컨트롤러에서 예외가 발생해도 반드시 호출된
 > afterCompletion은 예외 발생 여부와 무관하게 항상 호출된다. postHandle은 컨트롤러가 정상 리턴한 경우에만 호출된다.
 
 #### 빈칸 | [627]
-Spring MVC에서 @RequestBody를 자바 객체로 변환하는 컴포넌트는 ___ 이다.
-> HttpMessageConverter
+Spring MVC에서 @RequestBody를 자바 객체로 바꾸는 역할은 HTTP 메시지 ___ 가 담당한다.
+> 변환기
 > ArgumentResolver가 어노테이션을 분석하고 내부적으로 HttpMessageConverter를 호출해 HTTP 요청 본문을 자바 객체로 변환한다.
 
 #### 빈칸 | [628]
-Dispatcher Servlet에서 다양한 핸들러 타입을 동일한 방식으로 호출하기 위한 컴포넌트는 ___ 이다.
-> HandlerAdapter
+Dispatcher Servlet에서 다양한 핸들러 타입을 같은 방식으로 호출하게 해주는 컴포넌트는 핸들러 ___ 이다.
+> 어댑터
 > @RequestMapping, Controller 인터페이스, HttpRequestHandler 등 타입마다 호출 방식이 다르므로 HandlerAdapter가 이를 추상화해 유연성을 확보한다.
 
 #### 객관식 | [629]

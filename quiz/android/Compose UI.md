@@ -14,14 +14,14 @@ stateless composable은 state hoisting을 통해 구현할 수 있다.
 > state hoisting은 composable의 state를 상위 호출자로 올리는 패턴이다. 이를 통해 composable 자체는 state를 보유하지 않는 stateless 구조가 된다.
 
 #### 빈칸 | [615]
-Compose에서 configuration change에서도 state를 유지하려면 ___ 를 사용한다.
-> rememberSaveable
-> rememberSaveable은 saved instance state 메커니즘을 사용해 activity/process 재생성에서도 state를 보존한다. 단, 사용자가 직접 앱을 종료하면 유지되지 않는다.
+Compose에서 화면 회전 같은 구성 변경 후에도 유지해야 하는 값은 저장 가능한 ___로 관리한다.
+> 상태
+> rememberSaveable은 저장 가능한 상태를 saved instance state에 보관해 activity/process 재생성 후에도 복원한다.
 
 #### 빈칸 | [616]
-input이 recomposition 필요 빈도보다 자주 변경될 때 불필요한 recomposition을 방지하는 API는 ___ 이다.
-> derivedStateOf
-> derivedStateOf는 결과값이 실제로 변경된 경우에만 recomposition을 트리거한다. 단, 자체 비용이 크므로 실제로 불필요한 recomposition이 있을 때만 사용한다.
+입력값이 자주 바뀔 때 계산 결과가 실제로 달라질 때만 갱신되는 상태를 ___ 상태라고 한다.
+> 파생
+> derivedStateOf는 파생 상태의 결과값이 실제로 변경된 경우에만 recomposition을 트리거한다.
 
 #### 객관식 | [617]
 remember와 rememberSaveable의 차이로 올바른 것은?

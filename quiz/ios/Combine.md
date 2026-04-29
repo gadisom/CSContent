@@ -14,14 +14,14 @@ AnyCancellable 객체가 메모리에서 해제되면 구독이 자동으로 취
 > AnyCancellable은 deinit 시 자동으로 cancel()을 호출한다. 명시적으로 cancel()을 호출하지 않아도 scope를 벗어나면 구독이 종료된다.
 
 #### 빈칸 | [609]
-Combine에서 에러 처리 시 upstream 스트림을 유지하려면 ___ 와 catch를 함께 사용한다.
-> flatMap
-> catch만 사용하면 에러 발생 시 upstream과의 연결이 끊긴다. flatMap 안에서 catch를 감싸면 내부에서만 에러를 처리하고 upstream은 계속 유지된다.
+Combine에서 여러 Publisher 결과를 하나의 흐름으로 합치는 처리를 ___라고 한다.
+> 평탄화
+> flatMap은 여러 Publisher의 결과를 하나의 흐름으로 평탄화해 처리할 수 있게 한다.
 
 #### 빈칸 | [610]
-Combine에서 Publisher와 Subscriber 역할을 동시에 수행하는 타입은 ___ 이다.
-> Subject
-> Subject는 upstream을 구독하면서 downstream Subscriber에게 값을 전달할 수 있다. PassthroughSubject와 CurrentValueSubject 두 종류가 있다.
+Combine에서 값을 내보내는 쪽을 한국어로 ___라고 부른다.
+> 발행자
+> Publisher는 값을 발행하고, Subscriber는 그 값을 구독해 처리한다.
 
 #### 객관식 | [611]
 map과 tryMap의 차이로 올바른 것은?
