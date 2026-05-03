@@ -95,7 +95,7 @@ def parse_file(filepath: str) -> list[dict]:
 
         # 객관식: 선택지 수집
         choices = []
-        correct_index = -1
+        correct_index = []
         if qtype_raw == "객관식":
             while i < len(lines) and not lines[i].startswith(">") and not HEADER_RE.match(lines[i].strip()):
                 cm = CHOICE_RE.match(lines[i].strip())
@@ -103,7 +103,7 @@ def parse_file(filepath: str) -> list[dict]:
                     is_correct = bool(cm.group(2))
                     choice_text = cm.group(3).strip()
                     if is_correct:
-                        correct_index = len(choices)
+                        correct_index.append(len(choices))
                     choices.append(choice_text)
                 i += 1
 
@@ -119,7 +119,7 @@ def parse_file(filepath: str) -> list[dict]:
             "tag": tag,
             "question": question,
             "choices": choices,
-            "correct_index": correct_index,
+            "correct_index": correct_index,  # [int] — DB schema
             "ox_answer": "",
             "fill_answer": "",
             "explanation": blockquotes[1] if len(blockquotes) > 1 else "",

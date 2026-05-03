@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-05-01] ingest | network — 3-way handshake와 4-way handshake 보강
+raw 자료(TCP 3-way/4-way handshake 블로그 클리핑)를 기반으로 기존 빈약한 파일을 전면 보강. frontmatter 추가, 단계별 상태(SYN_SENT, SYN_RECEIVED, ESTABLISHED), TIME_WAIT 상세 설명 추가. 퀴즈 6문항(id 691-696) 신규 생성.
+생성/변경된 파일: published/network/3-way handshake와 4-way handshake.md, quiz/network/3-way handshake와 4-way handshake.md, wiki/log.md
+
+---
+
 ## [2026-04-29] meta | 퀴즈 삭제 동기화 로직 추가
 quiz/를 SSOT로 보고 로컬 파일에 없는 quiz_questions id를 Supabase에서도 삭제하도록 sync_quiz_to_supabase.py를 보강.
 생성/변경된 파일: scripts/sync_quiz_to_supabase.py, README.md, wiki/log.md
