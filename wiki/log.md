@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-17] meta | published stale 콘텐츠 삭제 동기화 로직 추가
+published/를 content_items의 SSOT로 보고, 로컬 published/에 없는 기존 콘텐츠 row를 Supabase에서도 삭제하도록 sync_to_supabase.py를 보강.
+생성/변경된 파일: scripts/sync_to_supabase.py, wiki/log.md
+
+---
+
 ## [2026-06-15] meta | network — OSI 7계층 콘텐츠명 정리
 TCP/IP는 OSI 7계층에 종속된 가벼운 개념이 아니므로 기존 콘텐츠명을 OSI 7계층으로 변경하고, TCP/IP는 비교 대상으로만 짧게 언급하도록 조정. 관련 wikilink와 퀴즈 파일명도 함께 정리.
 생성/변경된 파일: published/network/OSI 7계층.md, quiz/network/OSI 7계층.md, published/network/TCP와 UDP.md, published/network/DNS.md, published/network/웹 요청 흐름.md, wiki/index.md, wiki/log.md

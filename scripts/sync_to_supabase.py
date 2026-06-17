@@ -15,6 +15,7 @@ MD 템플릿 약속:
 
 display_order: 카테고리 내 파일명 정렬 순서 (1001, 2001, 3001...)
 id: DB에 slug가 있으면 기존 UUID 유지, 없으면 신규 생성
+delete: published/에 없는 기존 콘텐츠는 삭제
 """
 
 import glob
@@ -53,14 +54,14 @@ SECTION_TO_BLOCK = {
 GITHUB_RAW = "https://raw.githubusercontent.com/gadisom/CSContent/main/raw/assets"
 
 
-def fetch_existing() -> dict:
-    """slug → id 매핑"""
-    url = f"{SUPABASE_URL}/rest/v1/{TABLE}?select=slug,id"
+def fetch_existing() -> list[dict]:
+    """DB의 기존 콘텐츠 목록"""
+    url = f"{SUPABASE_URL}/rest/v1/{TABLE}?select=slug,id,category_slug"
     req = urllib.request.Request(
         url, headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"}
     )
     with urllib.request.urlopen(req) as resp:
-        return {row["slug"]: row["id"] for row in json.loads(resp.read())}
+        return json.loads(resp.read())
 
 
 def parse_category_meta(category_slug: str) -> dict:
@@ -205,6 +206,20 @@ def upsert(data: dict):
         return resp.status
 
 
+def delete_content(row_id: str):
+    url = f"{SUPABASE_URL}/rest/v1/{TABLE}?id=eq.{row_id}"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "apikey": SUPABASE_KEY,
+            "Authorization": f"Bearer {SUPABASE_KEY}",
+        },
+        method="DELETE",
+    )
+    with urllib.request.urlopen(req) as resp:
+        return resp.status
+
+
 def main():
     all_files = glob.glob("published/*/*.md")
     if not all_files:
@@ -223,15 +238,18 @@ def main():
     except Exception as e:
         print(f"⚠️  quiz_categories 동기화 실패 (스킵): {e}")
 
-    existing = fetch_existing()
-    print(f"DB 기존 콘텐츠: {len(existing)}개\n")
+    existing_rows = fetch_existing()
+    existing = {row["slug"]: row["id"] for row in existing_rows}
+    print(f"DB 기존 콘텐츠: {len(existing_rows)}개\n")
 
-    errors, inserts, updates = [], [], []
+    errors, inserts, updates, deletes = [], [], [], []
+    local_slugs = set()
 
     for category_slug, files in sorted(by_category.items()):
         for idx, filepath in enumerate(files):
             display_order = (idx + 1) * 1000 + 1
             slug = filepath.replace("\\", "/").split("/")[2].replace(".md", "")
+            local_slugs.add(slug)
 
             try:
                 parsed = parse_md(filepath)
@@ -267,7 +285,28 @@ def main():
                 print(f"✗  {filepath} — {e}")
                 errors.append(filepath)
 
-    print(f"\n신규: {len(inserts)}개  업데이트: {len(updates)}개  실패: {len(errors)}개")
+    managed_categories = set(by_category.keys())
+    stale_rows = [
+        row
+        for row in existing_rows
+        if row.get("category_slug") in managed_categories and row["slug"] not in local_slugs
+    ]
+    for row in sorted(stale_rows, key=lambda r: (r.get("category_slug", ""), r["slug"])):
+        try:
+            delete_content(row["id"])
+            deletes.append(row["slug"])
+            print(f"✗  DELETE stale content: {row.get('category_slug')}/{row['slug']}")
+        except urllib.error.HTTPError as e:
+            print(f"✗  stale delete {row['slug']} — HTTP {e.code}: {e.read().decode()}")
+            errors.append(row["slug"])
+        except Exception as e:
+            print(f"✗  stale delete {row['slug']} — {e}")
+            errors.append(row["slug"])
+
+    print(
+        f"\n신규: {len(inserts)}개  업데이트: {len(updates)}개  "
+        f"삭제: {len(deletes)}개  실패: {len(errors)}개"
+    )
     if errors:
         sys.exit(1)
 
