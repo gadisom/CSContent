@@ -6,8 +6,8 @@
 ---
 
 ## [2026-06-17] meta | 퀴즈 앱 디코딩 형식 복구
-DB 변경 사항에 맞춰 correct_index는 배열로 유지하되, 앱이 기대하는 객관식 type 값인 multiple_choice로 다시 동기화하도록 sync_quiz_to_supabase.py를 수정.
-생성/변경된 파일: scripts/sync_quiz_to_supabase.py, wiki/log.md
+DB 변경 사항에 맞춰 객관식 type은 mcq, correct_index는 배열로 동기화하도록 sync_quiz_to_supabase.py를 수정하고, import_quiz_from_db.py도 배열형 정답 인덱스를 처리하도록 보강.
+생성/변경된 파일: scripts/sync_quiz_to_supabase.py, scripts/import_quiz_from_db.py, wiki/log.md
 
 ---
 

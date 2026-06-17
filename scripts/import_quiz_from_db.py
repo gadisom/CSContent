@@ -86,10 +86,12 @@ def render_md(category_slug: str, tag: str, rows: list) -> str:
 
         else:
             choices = r.get("choices") or []
-            correct_idx = r.get("correct_index", -1)
+            correct_index = r.get("correct_index") or []
+            if isinstance(correct_index, int):
+                correct_index = [correct_index]
             lines += [f"#### 객관식 | [{rid}]", q]
             for i, choice in enumerate(choices):
-                prefix = f"{i + 1}. ✅" if i == correct_idx else f"{i + 1}."
+                prefix = f"{i + 1}. ✅" if i in correct_index else f"{i + 1}."
                 lines.append(f"{prefix} {choice}")
             lines += [f"> {exp}", ""]
 
