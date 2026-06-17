@@ -2,7 +2,7 @@
 
 > Claude가 자동으로 유지한다. 새 콘텐츠 생성 전 반드시 이 파일을 읽어 slug 중복을 확인한다.
 
-마지막 업데이트: 2026-04-25 (kotlin-map 추가)
+마지막 업데이트: 2026-06-15 (OSI 7계층 콘텐츠명 정리)
 
 ---
 
@@ -24,7 +24,7 @@ slug = 파일명(한글), display_order = 카테고리 내 알파벳 정렬 순�
 
 ---
 
-## 기존 콘텐츠 (published/ 파일 기준 SSOT: 2026-04-25) — 총 50개 (android: Map과 HashMap 추가)
+## 기존 콘텐츠 (published/ 파일 기준 SSOT: 2026-06-15) — 총 50개
 
 > slug = 파일명 그대로 (한글). display_order는 알파벳 정렬 기준 자동 부여.
 
@@ -119,7 +119,7 @@ slug = 파일명(한글), display_order = 카테고리 내 알파벳 정렬 순�
 | DNS | 3001 |
 | HTTP 메서드(GETPOST 중심) | 4001 |
 | HTTP와 HTTPS | 5001 |
-| OSI 7계층과 TCPIP | 6001 |
+| OSI 7계층 | 6001 |
 | REST와 RESTful | 7001 |
 | TCP와 UDP | 8001 |
 | 웹 요청 흐름 | 9001 |

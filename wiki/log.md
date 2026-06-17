@@ -5,6 +5,24 @@
 
 ---
 
+## [2026-06-15] meta | network — OSI 7계층 콘텐츠명 정리
+TCP/IP는 OSI 7계층에 종속된 가벼운 개념이 아니므로 기존 콘텐츠명을 OSI 7계층으로 변경하고, TCP/IP는 비교 대상으로만 짧게 언급하도록 조정. 관련 wikilink와 퀴즈 파일명도 함께 정리.
+생성/변경된 파일: published/network/OSI 7계층.md, quiz/network/OSI 7계층.md, published/network/TCP와 UDP.md, published/network/DNS.md, published/network/웹 요청 흐름.md, wiki/index.md, wiki/log.md
+
+---
+
+## [2026-06-15] ingest | network — OSI 7계층과 TCP/IP 보강
+raw/OSI 7계층.md 자료를 기반으로 기존 OSI 7계층과 TCPIP 콘텐츠를 7계층별 역할, 데이터 단위, 장비·프로토콜 중심의 개념 설명서 형태로 보강. 퀴즈 6문항(id 700-705) 추가.
+생성/변경된 파일: published/network/OSI 7계층과 TCPIP.md, quiz/network/OSI 모델.md, wiki/log.md
+
+---
+
+## [2026-05-04] ingest | database — 데이터베이스 기본 개념 보강
+데이터베이스를 단순 저장소가 아니라 애플리케이션의 신뢰 가능한 데이터 관리 계층으로 설명하도록 기존 콘텐츠를 보강. 트랜잭션, 인덱스, 격리 수준 등 세부 문서와 겹치지 않도록 기본 개념 지도 중심으로 정리.
+생성/변경된 파일: published/database/데이터베이스 기본.md, wiki/log.md
+
+---
+
 ## [2026-05-01] ingest | network — 3-way handshake와 4-way handshake 보강
 raw 자료(TCP 3-way/4-way handshake 블로그 클리핑)를 기반으로 기존 빈약한 파일을 전면 보강. frontmatter 추가, 단계별 상태(SYN_SENT, SYN_RECEIVED, ESTABLISHED), TIME_WAIT 상세 설명 추가. 퀴즈 6문항(id 691-696) 신규 생성.
 생성/변경된 파일: published/network/3-way handshake와 4-way handshake.md, quiz/network/3-way handshake와 4-way handshake.md, wiki/log.md
