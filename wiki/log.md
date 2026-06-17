@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-17] meta | 퀴즈 앱 디코딩 형식 복구
+앱이 기대하는 퀴즈 형식에 맞춰 객관식 type을 multiple_choice로, correct_index를 배열이 아닌 정수로 다시 동기화하도록 sync_quiz_to_supabase.py를 수정.
+생성/변경된 파일: scripts/sync_quiz_to_supabase.py, wiki/log.md
+
+---
+
 ## [2026-06-17] meta | published stale 콘텐츠 삭제 동기화 로직 추가
 published/를 content_items의 SSOT로 보고, 로컬 published/에 없는 기존 콘텐츠 row를 Supabase에서도 삭제하도록 sync_to_supabase.py를 보강.
 생성/변경된 파일: scripts/sync_to_supabase.py, wiki/log.md
