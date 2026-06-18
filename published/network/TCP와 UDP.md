@@ -22,5 +22,6 @@
 TCP, UDP, 신뢰성, 연결 지향, 비연결
 
 ## 연관 콘텐츠
+- [[TCPIP 모델]]
 - [[3-way handshake와 4-way handshake]]
 - [[OSI 7계층]]

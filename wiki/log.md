@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-17] ingest | network — TCPIP 모델 신규 생성
+TCPIP 모델을 OSI 7계층과 분리된 실제 인터넷 프로토콜 스택 개념으로 신규 작성. 네트워크 접근/인터넷/전송/응용 계층, IP와 포트, TCP·UDP와의 관계를 중심으로 정리하고 퀴즈 6문항(id 706-711)을 추가.
+생성/변경된 파일: published/network/TCPIP 모델.md, quiz/network/TCPIP 모델.md, published/network/TCP와 UDP.md, published/network/OSI 7계층.md, wiki/index.md, wiki/log.md
+
+---
+
 ## [2026-06-17] meta | 퀴즈 앱 디코딩 형식 복구
 DB 변경 사항에 맞춰 객관식 type은 mcq, correct_index는 배열로 동기화하도록 sync_quiz_to_supabase.py를 수정하고, import_quiz_from_db.py도 배열형 정답 인덱스를 처리하도록 보강.
 생성/변경된 파일: scripts/sync_quiz_to_supabase.py, scripts/import_quiz_from_db.py, wiki/log.md
