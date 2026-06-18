@@ -5,6 +5,18 @@
 
 ---
 
+## [2026-06-18] meta | 콘텐츠 문체 규칙 추가
+정의와 핵심 포인트 섹션에는 "면접에서는" 같은 면접 상황 전제 문장을 넣지 않고, 면접 관련 내용은 면접 질문 또는 면접 포인트 섹션으로 분리하도록 가이드에 명시. TCP와 UDP, TCPIP 모델 문서의 해당 표현도 정리.
+생성/변경된 파일: published/network/TCP와 UDP.md, published/network/TCPIP 모델.md, wiki/meta/content-guidelines.md, AGENTS.md, CLAUDE.md, wiki/log.md
+
+---
+
+## [2026-06-18] ingest | network — TCP와 UDP 개념 보강
+기존 TCP와 UDP 문서를 전송 계층, 포트 번호, TCP 신뢰성 메커니즘, UDP 선택 기준, 흐름 제어와 혼잡 제어 중심으로 보강하고 이미지 자료를 추가.
+생성/변경된 파일: published/network/TCP와 UDP.md, raw/assets/Pasted image 20260618195504.png, wiki/log.md
+
+---
+
 ## [2026-06-18] meta | TCPIP 모델 이미지 동기화 수정
 TCPIP 모델 문서의 이미지가 앱 image block으로 변환되도록 이미지 wikilink를 정의 섹션 안으로 이동하고, 참조되는 raw/assets 이미지를 업로드 대상에 포함.
 생성/변경된 파일: published/network/TCPIP 모델.md, raw/assets/Pasted image 20260617203311.png, wiki/log.md

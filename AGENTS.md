@@ -1,6 +1,6 @@
 # CSContent Wiki — 스키마 & 운영 가이드
 
-이 파일은 Claude Code가 이 위키를 어떻게 유지·관리해야 하는지를 정의한다.
+이 파일은 Codex가 이 위키를 어떻게 유지·관리해야 하는지를 정의한다.
 새 세션이 시작되면 항상 이 파일을 먼저 읽어라.
 
 ---
@@ -13,15 +13,15 @@
 ```
 Raw 자료 (사용자 제공)
     ↓
-[Claude 처리]
+[Codex 처리]
     ↓
 wiki/concepts/<slug>.md   ← Obsidian에서 보는 지식 문서
 wiki/content/<slug>.md    ← JSON 포함 (앱에 전달할 최종 결과물)
 ```
 
 원칙:
-- `wiki/` 는 Claude가 쓰고 관리한다. 사용자는 읽는다.
-- `raw/` 는 사용자가 넣는 원본 자료다. Claude는 읽기만 한다.
+- `wiki/` 는 Codex가 쓰고 관리한다. 사용자는 읽는다.
+- `raw/` 는 사용자가 넣는 원본 자료다. Codex는 읽기만 한다.
 - 모든 변경은 `wiki/log.md` 에 기록한다.
 - 새 세션 시작 시 `wiki/index.md` → `wiki/log.md` → 관련 페이지 순서로 읽어서 컨텍스트를 복원한다.
 
@@ -104,7 +104,7 @@ category (대분류)
 
 ```
 CSContent/
-├── CLAUDE.md                  # 이 파일 — 스키마 & 운영 가이드
+├── AGENTS.md                  # 이 파일 — 스키마 & 운영 가이드
 ├── published/                 # ★ 앱에 전달되는 콘텐츠 (폴더 구조 = DB 매핑)
 │   ├── data-structure/
 │   │   ├── array-linked-list/
@@ -268,7 +268,7 @@ created: <YYYY-MM-DD>
 1. `published/<new-category>/` 폴더 생성
 2. `quiz/<new-category>/` 폴더 생성
 3. `scripts/sync_to_supabase.py` → `CATEGORY_TITLES` 딕셔너리에 추가
-4. `CLAUDE.md` → 대분류 목록 테이블에 추가
+4. `AGENTS.md` → 대분류 목록 테이블에 추가
 5. `wiki/index.md` → display_order 현황 테이블에 추가
 6. `wiki/log.md` 에 기록
 
