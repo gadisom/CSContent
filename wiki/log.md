@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] meta | terms Supabase 동기화 자동화 추가
+terms/*.md를 word_terms 테이블에 업서트하고 로컬에 없는 단어를 삭제하는 sync_terms_to_supabase.py를 추가. GitHub Actions 동기화 대상에 terms/와 terms sync 단계를 포함.
+생성/변경된 파일: scripts/sync_terms_to_supabase.py, .github/workflows/sync-content.yml, wiki/log.md
+
+---
+
 ## [2026-06-20] meta | terms 단어장 포맷 단순화
 단어장 항목에서 full, related, tags 필드를 제거하고 answer/detail 중심으로 단순화. 풀네임은 필요한 경우 detail에 포함하도록 정리.
 생성/변경된 파일: terms/README.md, terms/network.md, wiki/log.md

@@ -243,6 +243,7 @@
   },
   "active": "1775c2315f578f1a",
   "lastOpenFiles": [
+    "scripts/sync_terms_to_supabase.py",
     "published/network/웹 요청 흐름.md",
     "terms/network.md",
     "terms/README.md",
@@ -278,7 +279,6 @@
     "published/algorithms/그래프 탐색(BFSDFS).md",
     "published/algorithms/시간복잡도와 공간복잡도.md",
     "published/algorithms/그리디.md",
-    "quiz/network/HTTPS.md",
     "quiz/oop",
     "published/oop",
     "quiz/server",
