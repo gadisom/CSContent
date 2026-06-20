@@ -243,6 +243,7 @@
   },
   "active": "1775c2315f578f1a",
   "lastOpenFiles": [
+    "raw/assets/symmetric-asymmetric-key-map.png",
     "published/network/HTTP와 HTTPS.md",
     "quiz/network/대칭키와 비대칭키.md",
     "published/network/대칭키와 비대칭키.md",
@@ -275,7 +276,6 @@
     "published/algorithms/동적 계획법.md",
     "published/database/데이터베이스 기본.md",
     "published/database/정규화.md",
-    "published/database/인덱스.md",
     "raw/assets/Pasted image 20260503224010.png",
     "quiz/oop",
     "published/oop",
