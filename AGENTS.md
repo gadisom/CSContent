@@ -116,6 +116,9 @@ CSContent/
 │   ├── operating-system/
 │   ├── database/
 │   └── network/
+├── terms/                     # 앱 단어장 원천 문서 (word_terms 동기화)
+│   ├── README.md
+│   └── network.md
 ├── wiki/
 │   ├── index.md               # 전체 위키 카탈로그 + display_order 현황
 │   ├── log.md                 # 활동 로그 (append-only)
@@ -133,6 +136,39 @@ CSContent/
 - **파일명** (`.md` 제외) → `title` = `subcategory_title` (자동)
 - **`id`** → 스크립트가 자동 생성 (기존 slug면 기존 UUID 유지, 신규면 uuid4())
 - **`is_published`** → 항상 `true` (published/ 안에 있으면 발행된 것)
+
+### terms/ 단어장 규칙
+- `terms/<category_slug>.md`
+- 파일 하나가 하나의 대분류 단어장을 나타낸다. 예: `terms/network.md`
+- 앱에서는 “단어 카드 → 정답 보기 → detail 확인” 흐름으로 사용한다.
+- `scripts/sync_terms_to_supabase.py`가 `terms/*.md`를 `word_terms` 테이블에 동기화한다.
+- `terms/README.md`는 포맷 설명 파일이므로 동기화 대상에서 제외한다.
+- `terms/`가 SSOT이므로, 같은 `category_id`에서 로컬 파일에 없는 기존 단어 row는 동기화 시 삭제된다.
+- `id`는 `<category>_<term_slug>` 형태로 스크립트가 자동 생성한다. 예: `network_ttl`
+- `display_order`는 파일 내 등장 순서대로 1001, 1002, 1003... 형태로 자동 생성한다.
+- `is_published`는 항상 `true`로 동기화한다.
+
+### Terms MD 템플릿
+
+```markdown
+---
+category: network
+title: 네트워크 단어장
+---
+
+# 네트워크 단어장
+
+## TTL
+- answer: DNS 응답이나 네트워크 정보가 유효한 시간
+- detail: Time To Live의 줄임말이다. DNS에서는 캐시된 응답을 얼마나 오래 재사용할 수 있는지 나타낸다.
+```
+
+### Terms 필드 규칙
+- `## <term>`: 카드 앞면에 표시할 용어다.
+- `answer`: 정답 보기에서 먼저 보여줄 짧은 정의다.
+- `detail`: 풀네임, 맥락, 예시를 포함한 1~2문장 보충 설명이다.
+- `full`, `related`, `tags` 같은 별도 필드는 두지 않는다. 필요한 풀네임은 `detail` 안에 자연스럽게 적는다.
+- 단어장은 빠른 회상용이므로 `answer`는 짧게, `detail`도 과하게 길게 쓰지 않는다.
 
 ### MD 템플릿 (반드시 이 형식 준수)
 
@@ -267,12 +303,29 @@ created: <YYYY-MM-DD>
 
 1. `published/<new-category>/` 폴더 생성
 2. `quiz/<new-category>/` 폴더 생성
-3. `scripts/sync_to_supabase.py` → `CATEGORY_TITLES` 딕셔너리에 추가
-4. `AGENTS.md` → 대분류 목록 테이블에 추가
-5. `wiki/index.md` → display_order 현황 테이블에 추가
-6. `wiki/log.md` 에 기록
+3. 필요한 경우 `terms/<new-category>.md` 생성
+4. `scripts/sync_to_supabase.py` → `CATEGORY_TITLES` 딕셔너리에 추가
+5. `AGENTS.md` → 대분류 목록 테이블에 추가
+6. `wiki/index.md` → display_order 현황 테이블에 추가
+7. `wiki/log.md` 에 기록
 
 > `quiz_categories` 테이블은 push 시 `sync_to_supabase.py`가 `published/` 폴더 목록을 읽어 자동 동기화한다. 수동 SQL 불필요.
+
+### Terms (단어장 생성/수정)
+트리거: 사용자가 단어장, 용어장, 카드 학습용 용어 정리를 요청할 때
+
+1. 관련 `published/` 문서를 읽어 용어 후보를 뽑는다.
+2. 기존 `terms/<category>.md`가 있으면 같은 용어 중복을 확인한다.
+3. 용어별로 `answer`와 `detail`만 작성한다.
+4. `answer`는 카드 정답으로 바로 보일 짧은 정의로 작성한다.
+5. `detail`에는 풀네임, 맥락, 주의점을 1~2문장으로 적는다.
+6. `terms/README.md` 포맷을 벗어나지 않는다.
+7. `wiki/log.md`에 변경 사항을 기록한다.
+
+**주의:**
+- 단어장에는 `full`, `related`, `tags` 필드를 만들지 않는다.
+- 단어장 항목은 앱 카드 단위이므로 한 항목에 여러 개념을 섞지 않는다.
+- Supabase 업로드는 `scripts/sync_terms_to_supabase.py`와 GitHub Actions가 처리한다.
 
 ### Query (현황 파악 / 추천)
 트리거: "뭐가 빠져있어?", "다음에 뭘 만들면 좋을까?"

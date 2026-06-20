@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] meta | terms 운영 가이드 반영
+앞으로 terms 단어장은 category별 MD 파일에 answer/detail만 작성하고, sync_terms_to_supabase.py로 word_terms에 동기화하도록 AGENTS/CLAUDE/terms README 운영 가이드에 명시.
+생성/변경된 파일: AGENTS.md, CLAUDE.md, terms/README.md, wiki/log.md
+
+---
+
 ## [2026-06-20] meta | terms Supabase 동기화 자동화 추가
 terms/*.md를 word_terms 테이블에 업서트하고 로컬에 없는 단어를 삭제하는 sync_terms_to_supabase.py를 추가. GitHub Actions 동기화 대상에 terms/와 terms sync 단계를 포함.
 생성/변경된 파일: scripts/sync_terms_to_supabase.py, .github/workflows/sync-content.yml, wiki/log.md

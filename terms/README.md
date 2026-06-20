@@ -2,7 +2,7 @@
 
 `terms/`는 앱의 단어장 기능을 위한 원천 문서다.
 
-현재는 프론트 기능 준비 전 단계이므로 Supabase 동기화 대상이 아니다.
+`scripts/sync_terms_to_supabase.py`가 `word_terms` 테이블에 동기화한다.
 기존 `published/`는 개념 학습 문서, `quiz/`는 문제풀이, `terms/`는 빠른 용어 회상용으로 분리한다.
 
 ## 파일 구조
@@ -26,3 +26,11 @@ terms/
 
 - `answer`: 정답 보기에서 먼저 보여줄 짧은 정의.
 - `detail`: 한두 문장 정도의 보충 설명.
+
+## 동기화 규칙
+
+- `terms/*.md`가 동기화 대상이다.
+- `terms/README.md`는 설명 파일이므로 제외된다.
+- `id`는 `<category>_<term_slug>` 형태로 자동 생성된다.
+- `display_order`는 파일 내 등장 순서대로 1001, 1002, 1003... 형태로 생성된다.
+- 같은 category에서 로컬 파일에 없는 기존 `word_terms` row는 삭제된다.
