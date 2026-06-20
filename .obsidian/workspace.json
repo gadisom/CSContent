@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "published/network/HTTP와 HTTPS.md",
+                "file": "published/network/대칭키와 비대칭키.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "HTTP와 HTTPS"
+              "title": "대칭키와 비대칭키"
             }
           }
         ],
@@ -243,6 +243,7 @@
   },
   "active": "1775c2315f578f1a",
   "lastOpenFiles": [
+    "published/network/HTTP와 HTTPS.md",
     "quiz/network/대칭키와 비대칭키.md",
     "published/network/대칭키와 비대칭키.md",
     "published/network/HTTP 메서드.md",
@@ -250,7 +251,6 @@
     "published/network/TCPIP 모델.md",
     "published/network/TCP와 UDP.md",
     "published/network/REST와 RESTful.md",
-    "published/network/HTTP와 HTTPS.md",
     "raw/assets/http-vs-https-flow.png",
     "raw/assets/http-methods-map.png",
     "published/network/DNS.md",
