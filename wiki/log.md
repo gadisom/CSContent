@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] ingest | network — DNS 보강
+DNS 문서를 재귀 해석기, 루트/TLD/권한 있는 네임서버, 주요 레코드, TTL 캐시 중심으로 보강하고 조회 흐름 도식과 퀴즈 6문항을 추가.
+생성/변경된 파일: published/network/DNS.md, quiz/network/DNS.md, raw/assets/dns-resolution-flow.png, wiki/log.md
+
+---
+
 ## [2026-06-20] ingest | network — 대칭키와 비대칭키 역할 설명 보강
 대칭키는 실제 데이터를 암호화하는 공통 비밀키이고, 비대칭키는 그 비밀키를 안전하게 만들기 위한 공개키·개인키 구조라는 설명을 보강.
 생성/변경된 파일: published/network/대칭키와 비대칭키.md, wiki/log.md
