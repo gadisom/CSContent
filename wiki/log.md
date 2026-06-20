@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] ingest | network — HTTP 메서드 이미지 추가
+HTTP 메서드 문서에 URI와 메서드의 관계를 보여주는 단순 도식을 추가.
+생성/변경된 파일: published/network/HTTP 메서드.md, raw/assets/http-methods-map.png, wiki/log.md
+
+---
+
 ## [2026-06-20] ingest | network — HTTP 메서드 보강
 기존 HTTP 메서드 콘텐츠를 HTTP 메서드로 이름 정리하고, 주요 메서드와 안전성·멱등성 개념을 보강.
 생성/변경된 파일: published/network/HTTP 메서드.md, published/network/HTTP와 HTTPS.md, published/network/REST와 RESTful.md, wiki/index.md, wiki/log.md
