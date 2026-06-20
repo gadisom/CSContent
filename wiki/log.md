@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] ingest | network — 대칭키와 비대칭키 신규 생성
+HTTPS/TLS 이해에 필요한 대칭키·비대칭키, 공개키·개인키, 세션 키, 전자서명 개념을 독립 콘텐츠로 생성하고 퀴즈 6문항을 추가.
+생성/변경된 파일: published/network/대칭키와 비대칭키.md, quiz/network/대칭키와 비대칭키.md, wiki/index.md, wiki/log.md
+
+---
+
 ## [2026-06-20] ingest | network — HTTP와 HTTPS 보강
 HTTP와 HTTPS 문서를 TLS의 역할, 대칭키·비대칭키, 기밀성·무결성·인증, 포트 차이 중심으로 보강하고 단순 비교 도식을 추가.
 생성/변경된 파일: published/network/HTTP와 HTTPS.md, raw/assets/http-vs-https-flow.png, wiki/log.md

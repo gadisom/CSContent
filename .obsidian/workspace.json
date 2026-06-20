@@ -243,6 +243,8 @@
   },
   "active": "1775c2315f578f1a",
   "lastOpenFiles": [
+    "quiz/network/대칭키와 비대칭키.md",
+    "published/network/대칭키와 비대칭키.md",
     "published/network/HTTP 메서드.md",
     "published/network/OSI 7계층.md",
     "published/network/TCPIP 모델.md",
@@ -274,7 +276,6 @@
     "published/database/데이터베이스 기본.md",
     "published/database/정규화.md",
     "published/database/인덱스.md",
-    "published/database/격리수준과 락.md",
     "raw/assets/Pasted image 20260503224010.png",
     "quiz/oop",
     "published/oop",
