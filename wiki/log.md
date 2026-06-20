@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] meta | terms 단어장 포맷 단순화
+단어장 항목에서 full, related, tags 필드를 제거하고 answer/detail 중심으로 단순화. 풀네임은 필요한 경우 detail에 포함하도록 정리.
+생성/변경된 파일: terms/README.md, terms/network.md, wiki/log.md
+
+---
+
 ## [2026-06-20] meta | terms 단어장 초안 생성
 앱 단어장 기능을 위한 terms/ 폴더와 네트워크 단어장 초안을 생성. 프론트 준비 전 단계이므로 Supabase 동기화 대상에는 포함하지 않음.
 생성/변경된 파일: terms/README.md, terms/network.md, wiki/log.md

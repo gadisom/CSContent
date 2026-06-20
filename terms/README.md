@@ -18,17 +18,11 @@ terms/
 
 ```markdown
 ## TTL
-- full: Time To Live
 - answer: DNS 응답이나 네트워크 정보가 유효한 시간
-- detail: DNS에서는 캐시된 응답을 얼마나 오래 재사용할 수 있는지 나타낸다.
-- related: [DNS]
-- tags: [DNS, 캐시]
+- detail: Time To Live의 줄임말이다. DNS에서는 캐시된 응답을 얼마나 오래 재사용할 수 있는지 나타낸다.
 ```
 
 ## 필드
 
-- `full`: 약어의 풀네임. 풀네임이 없으면 생략할 수 있다.
 - `answer`: 정답 보기에서 먼저 보여줄 짧은 정의.
 - `detail`: 한두 문장 정도의 보충 설명.
-- `related`: 연결할 `published/` 콘텐츠 제목.
-- `tags`: 검색과 묶음 학습에 사용할 키워드.
