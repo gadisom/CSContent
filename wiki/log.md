@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] ingest | network — 대칭키와 비대칭키 역할 설명 보강
+대칭키는 실제 데이터를 암호화하는 공통 비밀키이고, 비대칭키는 그 비밀키를 안전하게 만들기 위한 공개키·개인키 구조라는 설명을 보강.
+생성/변경된 파일: published/network/대칭키와 비대칭키.md, wiki/log.md
+
+---
+
 ## [2026-06-20] ingest | network — 대칭키와 비대칭키 이미지 추가
 대칭키와 비대칭키 문서에 같은 키, 공개키·개인키 쌍, TLS 세션 키 흐름을 보여주는 단순 도식을 추가.
 생성/변경된 파일: published/network/대칭키와 비대칭키.md, raw/assets/symmetric-asymmetric-key-map.png, wiki/log.md
