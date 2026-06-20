@@ -243,6 +243,9 @@
   },
   "active": "1775c2315f578f1a",
   "lastOpenFiles": [
+    "terms/network.md",
+    "terms/README.md",
+    "terms",
     "published/network/대칭키와 비대칭키.md",
     "published/network/웹 요청 흐름.md",
     "published/network/CORS.md",
@@ -276,8 +279,6 @@
     "published/algorithms/시간복잡도와 공간복잡도.md",
     "published/algorithms/그리디.md",
     "quiz/network/HTTPS.md",
-    "published/algorithms/동적 계획법.md",
-    "published/database/데이터베이스 기본.md",
     "quiz/oop",
     "published/oop",
     "quiz/server",
@@ -286,7 +287,6 @@
     "quiz/android",
     "published/android",
     "categories",
-    "quiz/ios",
-    "published/ios"
+    "quiz/ios"
   ]
 }

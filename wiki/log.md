@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] meta | terms 단어장 초안 생성
+앱 단어장 기능을 위한 terms/ 폴더와 네트워크 단어장 초안을 생성. 프론트 준비 전 단계이므로 Supabase 동기화 대상에는 포함하지 않음.
+생성/변경된 파일: terms/README.md, terms/network.md, wiki/log.md
+
+---
+
 ## [2026-06-20] ingest | network — DNS 보강
 DNS 문서를 재귀 해석기, 루트/TLD/권한 있는 네임서버, 주요 레코드, TTL 캐시 중심으로 보강하고 조회 흐름 도식과 퀴즈 6문항을 추가.
 생성/변경된 파일: published/network/DNS.md, quiz/network/DNS.md, raw/assets/dns-resolution-flow.png, wiki/log.md
