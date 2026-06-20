@@ -117,7 +117,7 @@ slug = 파일명(한글), display_order = 카테고리 내 알파벳 정렬 순�
 | 3-way handshake와 4-way handshake | 1001 |
 | CORS | 2001 |
 | DNS | 3001 |
-| HTTP 메서드(GETPOST 중심) | 4001 |
+| HTTP 메서드 | 4001 |
 | HTTP와 HTTPS | 5001 |
 | OSI 7계층 | 6001 |
 | REST와 RESTful | 7001 |

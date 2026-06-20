@@ -22,6 +22,6 @@
 REST, RESTful, 리소스, HTTP 메서드, URI
 
 ## 연관 콘텐츠
-- [[HTTP 메서드(GET/POST 중심)]]
+- [[HTTP 메서드]]
 - [[쿠키와 세션]]
 - [[CORS]]

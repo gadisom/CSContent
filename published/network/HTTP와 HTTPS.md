@@ -25,6 +25,6 @@ HTTP, HTTPS, TLS, 암호화, 인증서
 - [[3-way handshake와 4-way handshake]]
 - [[쿠키와 세션]]
 - [[SQL Injection]]
-- [[HTTP 메서드(GET/POST 중심)]]
+- [[HTTP 메서드]]
 - [[CORS]]
 - [[웹 요청 흐름]]

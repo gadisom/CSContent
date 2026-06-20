@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] ingest | network — HTTP 메서드 보강
+기존 HTTP 메서드 콘텐츠를 HTTP 메서드로 이름 정리하고, 주요 메서드와 안전성·멱등성 개념을 보강.
+생성/변경된 파일: published/network/HTTP 메서드.md, published/network/HTTP와 HTTPS.md, published/network/REST와 RESTful.md, wiki/index.md, wiki/log.md
+
+---
+
 ## [2026-06-20] ingest | network — 3-way handshake와 4-way handshake 보강
 TCP 연결 수립/종료 흐름을 시퀀스 번호, ACK 번호, 상태 전이(SYN_SENT, SYN_RECEIVED, FIN_WAIT, CLOSE_WAIT, LAST_ACK, TIME_WAIT), half-close, TIME_WAIT 필요성 중심으로 보강하고 단계 흐름 이미지를 추가.
 생성/변경된 파일: published/network/3-way handshake와 4-way handshake.md, raw/assets/tcp-handshake-flow.png, wiki/log.md
