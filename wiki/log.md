@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-20] ingest | network — 3-way handshake와 4-way handshake 보강
+TCP 연결 수립/종료 흐름을 시퀀스 번호, ACK 번호, 상태 전이(SYN_SENT, SYN_RECEIVED, FIN_WAIT, CLOSE_WAIT, LAST_ACK, TIME_WAIT), half-close, TIME_WAIT 필요성 중심으로 보강하고 단계 흐름 이미지를 추가.
+생성/변경된 파일: published/network/3-way handshake와 4-way handshake.md, raw/assets/tcp-handshake-flow.png, wiki/log.md
+
+---
+
 ## [2026-06-18] meta | 콘텐츠 문체 규칙 추가
 정의와 핵심 포인트 섹션에는 "면접에서는" 같은 면접 상황 전제 문장을 넣지 않고, 면접 관련 내용은 면접 질문 또는 면접 포인트 섹션으로 분리하도록 가이드에 명시. TCP와 UDP, TCPIP 모델 문서의 해당 표현도 정리.
 생성/변경된 파일: published/network/TCP와 UDP.md, published/network/TCPIP 모델.md, wiki/meta/content-guidelines.md, AGENTS.md, CLAUDE.md, wiki/log.md
