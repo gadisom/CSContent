@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-21] ingest | network — handshake SDUI 토큰 실험
+3-way handshake와 4-way handshake 문서에 semantic token 기반 강조 문법을 시범 적용해 term, accent, danger, warning, muted, lead 표현을 앱 렌더링 실험에 사용할 수 있도록 정리.
+생성/변경된 파일: published/network/3-way handshake와 4-way handshake.md, wiki/log.md
+
+---
+
 ## [2026-06-21] meta | terms 기본 단어장 확장
 네트워크 외 기존 대분류에도 앱 단어장 초안으로 사용할 기본 용어를 answer/detail 형식으로 추가.
 생성/변경된 파일: terms/algorithms.md, terms/android.md, terms/data-structure.md, terms/database.md, terms/ios.md, terms/oop.md, terms/operating-system.md, terms/server.md, terms/README.md, wiki/log.md
