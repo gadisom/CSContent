@@ -5,6 +5,36 @@
 
 ---
 
+## [2026-06-21] meta | network terms — 네트워크 개념 용어 확장
+네트워크 published 문서 전반을 훑어 OSI/TCPIP, TCP 상태, HTTP 메서드, REST, CORS, 쿠키/세션, HTTPS 암호화, 웹 요청 흐름 관련 핵심 용어를 단어장에 추가.
+생성/변경된 파일: terms/network.md, wiki/log.md
+
+---
+
+## [2026-06-21] ingest | network — 웹 요청 흐름 보강
+웹 요청 흐름 문서를 URL 해석, 캐시, DNS, TCP 연결, TLS 핸드셰이크, HTTP 요청/응답, 서버 처리, 브라우저 렌더링 단계 중심으로 보강하고 semantic token 문법과 흐름 도식을 적용.
+생성/변경된 파일: published/network/웹 요청 흐름.md, raw/assets/web-request-flow.png, wiki/log.md
+
+---
+
+## [2026-06-21] ingest | network — 쿠키와 세션 보강
+쿠키와 세션 문서를 HTTP 무상태성, Set-Cookie/Cookie 헤더, 세션 ID 흐름, HttpOnly/Secure/SameSite 보안 속성, 분산 환경의 세션 관리 중심으로 보강하고 semantic token 문법을 적용.
+생성/변경된 파일: published/network/쿠키와 세션.md, wiki/log.md
+
+---
+
+## [2026-06-21] meta | network terms — URI와 URL 추가
+REST와 RESTful 보강 흐름에 맞춰 네트워크 단어장에 URI와 URL 기본 정의를 추가.
+생성/변경된 파일: terms/network.md, wiki/log.md
+
+---
+
+## [2026-06-21] ingest | network — REST와 RESTful 보강
+REST와 RESTful 문서를 리소스, 표현, 무상태성, URI와 HTTP 메서드 역할, 상태 코드, RESTful 표현의 상대성 중심으로 보강하고 semantic token 문법을 적용.
+생성/변경된 파일: published/network/REST와 RESTful.md, wiki/log.md
+
+---
+
 ## [2026-06-21] ingest | network — CORS 보강
 CORS 문서를 Same-Origin Policy, Origin, preflight, credentials, 주요 Access-Control-Allow 헤더 중심으로 보강하고 semantic token 문법을 적용.
 생성/변경된 파일: published/network/CORS.md, wiki/log.md
