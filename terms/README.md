@@ -9,9 +9,15 @@
 
 ```text
 terms/
-  network.md
-  ios.md
+  algorithms.md
+  android.md
+  data-structure.md
   database.md
+  ios.md
+  network.md
+  oop.md
+  operating-system.md
+  server.md
 ```
 
 ## 항목 포맷

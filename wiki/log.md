@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-21] meta | terms 기본 단어장 확장
+네트워크 외 기존 대분류에도 앱 단어장 초안으로 사용할 기본 용어를 answer/detail 형식으로 추가.
+생성/변경된 파일: terms/algorithms.md, terms/android.md, terms/data-structure.md, terms/database.md, terms/ios.md, terms/oop.md, terms/operating-system.md, terms/server.md, terms/README.md, wiki/log.md
+
+---
+
 ## [2026-06-20] meta | terms 운영 가이드 반영
 앞으로 terms 단어장은 category별 MD 파일에 answer/detail만 작성하고, sync_terms_to_supabase.py로 word_terms에 동기화하도록 AGENTS/CLAUDE/terms README 운영 가이드에 명시.
 생성/변경된 파일: AGENTS.md, CLAUDE.md, terms/README.md, wiki/log.md
