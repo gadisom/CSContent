@@ -5,8 +5,14 @@
 
 ---
 
+## [2026-06-21] ingest | network — SDUI 토큰 적용 확장
+DNS, HTTP 메서드, HTTP와 HTTPS, OSI 7계층, TCPIP 모델, TCP와 UDP, 대칭키와 비대칭키 문서에 semantic token 문법을 적용. 코드 백틱 없이 term, accent, danger, warning, muted, lead 중심으로 정리.
+생성/변경된 파일: published/network/DNS.md, published/network/HTTP 메서드.md, published/network/HTTP와 HTTPS.md, published/network/OSI 7계층.md, published/network/TCPIP 모델.md, published/network/TCP와 UDP.md, published/network/대칭키와 비대칭키.md, wiki/log.md
+
+---
+
 ## [2026-06-21] ingest | network — handshake SDUI 토큰 실험
-3-way handshake와 4-way handshake 문서에 semantic token 기반 강조 문법을 시범 적용해 term, accent, danger, warning, muted, lead 표현을 앱 렌더링 실험에 사용할 수 있도록 정리.
+3-way handshake와 4-way handshake 문서에 semantic token 문법을 시범 적용. 코드 백틱과 토큰 문법을 섞지 않고 term, accent, danger, warning, muted, lead 표현만 사용하도록 정리.
 생성/변경된 파일: published/network/3-way handshake와 4-way handshake.md, wiki/log.md
 
 ---
