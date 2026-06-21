@@ -5,6 +5,18 @@
 
 ---
 
+## [2026-06-21] ingest | network — CORS 보강
+CORS 문서를 Same-Origin Policy, Origin, preflight, credentials, 주요 Access-Control-Allow 헤더 중심으로 보강하고 semantic token 문법을 적용.
+생성/변경된 파일: published/network/CORS.md, wiki/log.md
+
+---
+
+## [2026-06-21] meta | SDUI 토큰 작성 가이드 반영
+앞으로 published MD 생성과 보강 시 semantic token을 사용할 수 있도록 AGENTS, CLAUDE, 콘텐츠 가이드라인에 허용 토큰과 백틱 혼용 금지 규칙을 명시.
+생성/변경된 파일: AGENTS.md, CLAUDE.md, wiki/meta/content-guidelines.md, wiki/log.md
+
+---
+
 ## [2026-06-21] ingest | network — SDUI 토큰 적용 확장
 DNS, HTTP 메서드, HTTP와 HTTPS, OSI 7계층, TCPIP 모델, TCP와 UDP, 대칭키와 비대칭키 문서에 semantic token 문법을 적용. 코드 백틱 없이 term, accent, danger, warning, muted, lead 중심으로 정리.
 생성/변경된 파일: published/network/DNS.md, published/network/HTTP 메서드.md, published/network/HTTP와 HTTPS.md, published/network/OSI 7계층.md, published/network/TCPIP 모델.md, published/network/TCP와 UDP.md, published/network/대칭키와 비대칭키.md, wiki/log.md
