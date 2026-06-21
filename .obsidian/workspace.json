@@ -55,12 +55,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "terms/network.md",
+                "file": "terms/server.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "network"
+              "title": "server"
             }
           }
         ],
@@ -243,10 +243,18 @@
   },
   "active": "1775c2315f578f1a",
   "lastOpenFiles": [
+    "terms/README.md",
+    "terms/oop.md",
+    "terms/ios.md",
+    "terms/database.md",
+    "terms/data-structure.md",
+    "terms/android.md",
+    "terms/algorithms.md",
+    "terms/network.md",
+    "terms/server.md",
+    "terms/operating-system.md",
     "scripts/sync_terms_to_supabase.py",
     "published/network/웹 요청 흐름.md",
-    "terms/network.md",
-    "terms/README.md",
     "terms",
     "published/network/대칭키와 비대칭키.md",
     "published/network/CORS.md",
@@ -271,14 +279,7 @@
     "raw/격리수준과 락.md",
     "raw/assets/Pasted image 20260615165112.png",
     "raw/OSI 7계층.md",
-    "published/network/OSI 7계층과 TCPIP.md",
-    "quiz/network/OSI 7계층.md",
-    "quiz/network/OSI 모델.md",
     "raw/assets/Pasted image 20260615163603.png",
-    "published/ios/앱 생명주기.md",
-    "published/algorithms/그래프 탐색(BFSDFS).md",
-    "published/algorithms/시간복잡도와 공간복잡도.md",
-    "published/algorithms/그리디.md",
     "quiz/oop",
     "published/oop",
     "quiz/server",
@@ -286,7 +287,6 @@
     "published/Server",
     "quiz/android",
     "published/android",
-    "categories",
-    "quiz/ios"
+    "categories"
   ]
 }
