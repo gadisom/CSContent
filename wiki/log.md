@@ -5,6 +5,36 @@
 
 ---
 
+## [2026-06-21] ingest | ios — 값 타입과 참조 타입 심화
+값 타입과 참조 타입 문서를 Value Semantics, 내부 참조 공유, struct/class 저장 위치 오해, Copy-on-Write 동작, Equality와 Identity 차이 중심으로 고도화하고 심화 퀴즈와 단어장 항목을 추가.
+생성/변경된 파일: published/ios/값 타입과 참조 타입.md, quiz/ios/값 타입과 참조 타입.md, terms/ios.md, wiki/log.md
+
+---
+
+## [2026-06-21] ingest | ios — 값 타입과 참조 타입 추가
+Swift의 값 타입과 참조 타입을 struct/class, 복사와 공유, Copy-on-Write, let 선언 차이, SwiftUI View 구조 관점으로 정리하고 iOS 퀴즈와 단어장 항목을 추가.
+생성/변경된 파일: published/ios/값 타입과 참조 타입.md, quiz/ios/값 타입과 참조 타입.md, terms/ios.md, wiki/index.md, wiki/log.md
+
+---
+
+## [2026-06-21] ingest | ios — 옵셔널과 nil 안전성 추가
+Swift Optional을 nil 안전성, Optional Binding/Chaining, Nil-Coalescing, Force Unwrapping, IUO, weak 참조 관점으로 정리하고 iOS 퀴즈와 단어장 항목을 추가.
+생성/변경된 파일: published/ios/옵셔널과 nil 안전성.md, quiz/ios/옵셔널과 nil 안전성.md, terms/ios.md, wiki/index.md, wiki/log.md
+
+---
+
+## [2026-06-21] lint | network quiz — TCP handshake 중복 정리
+3-way handshake 상세 퀴즈와 중복되는 예전 TCP 핸드셰이크 퀴즈 파일을 제거하고, TCP 기본 퀴즈의 중복 순서 문항을 신뢰성 메커니즘 문항으로 변경.
+생성/변경된 파일: quiz/network/TCP.md, quiz/network/TCP 핸드셰이크.md, wiki/log.md
+
+---
+
+## [2026-06-21] lint | network quiz — 유사 문항 추가 정리
+네트워크 퀴즈 전체를 비교해 DNS 주소 빈칸 중복, HTTPS/TLS 유사 OX, UDP 실시간/비연결 반복 문항을 캐시, 무결성, 서버 인증, ACK 재전송, 데이터그램 포인트로 분산하고 반복 템플릿 질문을 구체화.
+생성/변경된 파일: quiz/network/DNS.md, quiz/network/HTTP.md, quiz/network/TLS.md, quiz/network/UDP.md, quiz/network/서브넷.md, wiki/log.md
+
+---
+
 ## [2026-06-21] meta | network terms — 네트워크 개념 용어 확장
 네트워크 published 문서 전반을 훑어 OSI/TCPIP, TCP 상태, HTTP 메서드, REST, CORS, 쿠키/세션, HTTPS 암호화, 웹 요청 흐름 관련 핵심 용어를 단어장에 추가.
 생성/변경된 파일: terms/network.md, wiki/log.md
