@@ -5,6 +5,18 @@
 
 ---
 
+## [2026-06-22] ingest | operating-system — 이중모드와 시스템 콜 추가
+raw/운영체제-이중모드와 시스템 콜.md를 기반으로 published 콘텐츠 생성. 이중모드 개념, 모드 전환 3가지 경우, 시스템 콜 실행 과정, 종류 5가지 포함. display_order 12001.
+생성/변경된 파일: published/operating-system/이중모드와 시스템 콜.md, wiki/index.md, wiki/log.md
+
+---
+
+## [2026-06-22] ingest | android — Android IPC 콘텐츠 추가
+Binder, AIDL, Messenger, Intent, ContentProvider, BroadcastReceiver 등 Android IPC 메커니즘 전반을 다루는 published 콘텐츠 생성. display_order 3001.
+생성/변경된 파일: published/android/Android IPC.md, wiki/index.md, wiki/log.md
+
+---
+
 ## [2026-06-22] ingest | android quiz — IPC 퀴즈 추가
 Android IPC 학습을 위해 Binder, AIDL, Parcelable, ContentProvider, Messenger, PendingIntent, Binder transaction 제약 중심의 퀴즈를 먼저 추가.
 생성/변경된 파일: quiz/android/IPC.md, wiki/log.md
