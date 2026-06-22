@@ -5,6 +5,12 @@
 
 ---
 
+## [2026-06-22] ingest | android quiz — IPC 퀴즈 추가
+Android IPC 학습을 위해 Binder, AIDL, Parcelable, ContentProvider, Messenger, PendingIntent, Binder transaction 제약 중심의 퀴즈를 먼저 추가.
+생성/변경된 파일: quiz/android/IPC.md, wiki/log.md
+
+---
+
 ## [2026-06-21] ingest | ios — 값 타입과 참조 타입 심화
 값 타입과 참조 타입 문서를 Value Semantics, 내부 참조 공유, struct/class 저장 위치 오해, Copy-on-Write 동작, Equality와 Identity 차이 중심으로 고도화하고 심화 퀴즈와 단어장 항목을 추가.
 생성/변경된 파일: published/ios/값 타입과 참조 타입.md, quiz/ios/값 타입과 참조 타입.md, terms/ios.md, wiki/log.md
