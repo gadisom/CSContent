@@ -5,6 +5,48 @@
 
 ---
 
+## [2026-06-23] ingest | operating-system — 퀴즈와 단어장 커버리지 정리
+운영체제 동시성 콘텐츠 업로드 전 단어장과 퀴즈 커버리지를 점검하고 fork, 공유 메모리, 동기화, CPU/I/O-bound 항목과 관련 퀴즈를 추가.
+생성/변경된 파일: published/operating-system/멀티프로세스와 멀티스레드.md, quiz/operating-system/멀티프로세스와 멀티스레드.md, terms/operating-system.md, wiki/log.md
+
+---
+
+## [2026-06-23] ingest | operating-system — 메모리 영역 설명 추가
+메모리 관리 문서에 프로세스 주소 공간의 Code/Data/Heap/Stack 영역 설명을 추가하고 관련 퀴즈와 단어장 항목을 보강.
+생성/변경된 파일: published/operating-system/메모리 관리.md, quiz/operating-system/메모리 관리.md, terms/operating-system.md, wiki/log.md
+
+---
+
+## [2026-06-23] ingest | operating-system — 메모리 관리 보강
+메모리 관리 문서를 주소 공간, MMU, 주소 변환, 메모리 보호, 내부/외부 단편화, 스와핑 관점으로 보강하고 깨진 pasted 이미지를 모바일용 도식으로 교체. 관련 퀴즈와 단어장 항목 추가.
+생성/변경된 파일: published/operating-system/메모리 관리.md, quiz/operating-system/메모리 관리.md, terms/operating-system.md, raw/assets/memory-management-overview.png, wiki/log.md
+
+---
+
+## [2026-06-23] ingest | operating-system — 멀티프로세스와 멀티스레드 도식 추가
+멀티프로세스의 격리와 IPC 비용, 멀티스레드의 공유 메모리와 동기화 위험을 대비하는 모바일용 단순 도식 이미지를 추가.
+생성/변경된 파일: published/operating-system/멀티프로세스와 멀티스레드.md, raw/assets/multi-process-vs-multithread.png, wiki/log.md
+
+---
+
+## [2026-06-23] ingest | operating-system — 멀티프로세스와 멀티스레드 보강
+멀티프로세스와 멀티스레드 문서를 격리, IPC 비용, 공유 메모리, 동기화, 스레드 풀, Copy-on-Write, CPU/I/O 작업 특성 중심으로 보강하고 관련 퀴즈와 단어장 항목을 추가.
+생성/변경된 파일: published/operating-system/멀티프로세스와 멀티스레드.md, quiz/operating-system/멀티프로세스와 멀티스레드.md, terms/operating-system.md, wiki/log.md
+
+---
+
+## [2026-06-22] ingest | operating-system — 프로세스와 스레드 도식 추가
+프로세스별 주소 공간 격리와 프로세스 내부 스레드의 공유 영역/독립 실행 문맥을 보여주는 도식 이미지를 추가.
+생성/변경된 파일: published/operating-system/프로세스와 스레드.md, raw/assets/process-thread-memory.png, wiki/log.md
+
+---
+
+## [2026-06-22] ingest | operating-system — 프로세스와 스레드 보강
+프로세스와 스레드 문서를 자원 보호 단위와 실행 흐름 단위, 주소 공간, PCB/TCB, 스택과 힙 공유, 경쟁 상태, 컨텍스트 스위칭 비용 관점으로 보강하고 관련 퀴즈와 단어장 항목을 추가.
+생성/변경된 파일: published/operating-system/프로세스와 스레드.md, quiz/operating-system/프로세스와 스레드.md, terms/operating-system.md, wiki/log.md
+
+---
+
 ## [2026-06-22] ingest | operating-system — 이중모드와 시스템 콜 추가
 raw/운영체제-이중모드와 시스템 콜.md를 기반으로 published 콘텐츠 생성. 이중모드 개념, 모드 전환 3가지 경우, 시스템 콜 실행 과정, 종류 5가지 포함. display_order 12001.
 생성/변경된 파일: published/operating-system/이중모드와 시스템 콜.md, wiki/index.md, wiki/log.md
